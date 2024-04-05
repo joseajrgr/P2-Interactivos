@@ -4,9 +4,20 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <input id="itemInput" type="text" placeholder="Añade un artículo">
-    <button onclick="addItem()">Añadir</button>
-    <ul id="listaCompra"></ul>
+    <h1>Tienda de Productos</h1>
+
+    <ul id="listaProductos">
+        <li>Zapatillas deportivas Kike - $80</li>
+        <li>Camiseta de algodón - $20</li>
+        <li>Lavadora - $120</li>
+        <!-- Agrega más productos aquí -->
+    </ul>
+
+    <input id="productoInput" type="text" placeholder="Nombre del producto">
+    <button onclick="agregarAlCarrito()">Añadir al carrito</button>
+
+    <h2>Carrito de compras</h2>
+    <ul id="carrito"></ul>
 
     <script src="script.js"></script>
 </body>

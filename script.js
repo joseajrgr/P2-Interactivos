@@ -1,8 +1,11 @@
-function addItem() {
-    var ul = document.getElementById("listaCompra");
-    var item = document.getElementById("itemInput");
-    var li = document.createElement("li");
-    li.appendChild(document.createTextNode(item.value));
-    ul.appendChild(li);
-    item.value = "";
+function agregarAlCarrito() {
+    var productoInput = document.getElementById("productoInput");
+    var producto = productoInput.value.trim();
+    if (producto !== "") {
+        var carrito = document.getElementById("carrito");
+        var li = document.createElement("li");
+        li.textContent = producto;
+        carrito.appendChild(li);
+        productoInput.value = "";
+    }
 }
