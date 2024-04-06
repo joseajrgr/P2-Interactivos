@@ -22,6 +22,16 @@ function iniciarReconocimientoVoz() {
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
 
+        var microfonoBtn = document.getElementById('microfonoBtn');
+
+        recognition.onstart = function() {
+            microfonoBtn.style.backgroundColor = 'lightgreen';
+        };
+    
+        recognition.onend = function() {
+            microfonoBtn.style.backgroundColor = '';
+        };
+
         recognition.onresult = function(event) {
             var speechResult = event.results[0][0].transcript;
             console.log('Resultado de reconocimiento de voz: ' + speechResult);

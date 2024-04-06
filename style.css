@@ -2,10 +2,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    max-width: 90%;
+    margin: auto;
 }
 
 h1 {
     text-align: center;
+    font-size: 2em;
 }
 
 #listaCompra {
@@ -15,14 +18,14 @@ h1 {
 }
 #listaCompra li {
     list-style-type: none;
-    margin: 5px;
-    padding: 5px;
+    margin: 0.5em;
+    padding: 0.5em;
     border: 1px solid #000;
 }
 
 #productoInput {
-    width: 80%;
-    padding: 5px;
+    width: 100%;
+    padding: 0.5em;
 }
 
 #carrito {
@@ -32,8 +35,16 @@ h1 {
 }
 
 #carrito li {
-    margin: 5px;
-    padding: 5px;
+    margin: 0.5em;
+    padding: 0.5em;
     border: 1px solid #333;
     background-color: #f9f9f9;
+}
+
+#microfonoBtn {
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 20px auto;
+    font-size: 30px;
 }
