@@ -1,16 +1,29 @@
+var listaProductos = {
+    "Zapatillas deportivas Kike": 80,
+    "Camiseta de algodón": 20,
+    "Lavadora": 120
+};
+
+var costeTotal = 0;
+
 function agregarAlCarrito(producto) {
     if (producto === undefined) {
         var productoInput = document.getElementById("productoInput");
         var producto = productoInput.value.trim();
     }
-    console.log('Agregando al carrito: ' + producto);
+    console.log('Intentando agregar al carrito: ' + producto);
     
-    if (producto !== "") {
+    if (producto !== "" && listaProductos.hasOwnProperty(producto)) {
         var carrito = document.getElementById("carrito");
         var li = document.createElement("li");
         li.textContent = producto;
         carrito.appendChild(li);
         productoInput.value = "";
+
+        costeTotal += listaProductos[producto];
+        console.log('Coste total del carrito: $' + costeTotal);
+    } else {
+        console.log('Lo sentimos, no encontramos el producto que busca.');
     }
 }
 
