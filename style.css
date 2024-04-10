@@ -15,7 +15,8 @@ header {
 
 h1, h2 {
     font-size: 3.5em;
-    margin-bottom: 20px;
+    margin: 20px;
+    
 }
 
 #listaProductos, #carrito {
@@ -38,11 +39,18 @@ h1, h2 {
 }
 
 #productoInput {
+    border-radius: 50px;
     font-size: 2em;
     width: 90%;
+    left: 50%;
+    height: 65px;
     padding: 10px;
     margin: 20px;
+
+
 }
+
+
 
 button {
     font-size: 2em;
@@ -68,11 +76,10 @@ button {
     border: 1px solid #333;
     background-color: #f9f9f9;
 }
-
 #microfonoBtn {
     display: block;
-    width: 50px;
-    height: 50px;
+    width: 125px;
+    height: 125px;
     margin: 20px auto;
     font-size: 30px;
     position: fixed;
