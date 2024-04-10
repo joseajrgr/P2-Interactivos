@@ -1,7 +1,8 @@
 var listaProductos = {
     "Zapatillas deportivas Kike": 80,
     "Camiseta de algodón": 20,
-    "Lavadora": 120
+    "Lavadora": 120,
+    "Lámpara": 35
 };
 
 var costeTotal = 0;
