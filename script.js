@@ -32,11 +32,32 @@ function agregarAlCarrito(producto) {
     }
 }
 
-// Función para iniciar el reconocimiento de voz
+function eliminarDelCarrito(producto) {
+    var productoEnMinusculas = producto.toLowerCase();
+    var productoEnLista = Object.keys(listaProductos).find(key => key.toLowerCase() === productoEnMinusculas);
+
+    if (producto !== "" && productoEnLista) {
+        var carrito = document.getElementById("carrito");
+        var items = Array.from(carrito.getElementsByTagName("li"));
+        var itemAEliminar = items.find(item => item.textContent.toLowerCase() === productoEnMinusculas);
+
+        if (itemAEliminar) {
+            carrito.removeChild(itemAEliminar);
+            costeTotal -= listaProductos[productoEnLista];
+            console.log('Coste total del carrito: $' + costeTotal);
+        } else {
+            console.log('El producto no está en el carrito.');
+        }
+    } else {
+        console.log('Lo sentimos, no encontramos el producto que busca.');
+    }
+}
+
+// Función para iniciar reconocimiento por voz
 function iniciarReconocimientoVoz() {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
         var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'es-ES'; // Configura el idioma a español
+        recognition.lang = 'es-ES';
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
 
@@ -53,7 +74,12 @@ function iniciarReconocimientoVoz() {
         recognition.onresult = function(event) {
             var speechResult = event.results[0][0].transcript;
             console.log('Resultado de reconocimiento de voz: ' + speechResult);
-            agregarAlCarrito(speechResult);
+
+            if (speechResult.toLowerCase().startsWith('añade')) {
+                agregarAlCarrito(speechResult.slice(6));
+            } else if (speechResult.toLowerCase().startsWith('elimina')) {
+                eliminarDelCarrito(speechResult.slice(8));
+            }
         };
 
         recognition.onerror = function(event) {

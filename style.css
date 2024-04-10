@@ -41,26 +41,23 @@ h1, h2 {
 #productoInput {
     border-radius: 50px;
     font-size: 2em;
-    width: 90%;
-    left: 50%;
+    width: 80%;
     height: 65px;
     padding: 10px;
     margin: 20px;
-
-
 }
 
-
-
-button {
+#agregarBtn {
     font-size: 2em;
-    display: block;
-    width: 90%;
+    display: inline-block;
+    width: 65px;
+    height: 65px;
     padding: 10px;
-    margin: 20px auto;
-    color: #000;
+    margin: 20px;
     background-color: #fff;
-    border: 1px solid #000;
+    border: 2px solid green;
+    border-radius: 50%;
+    color: green;
     cursor: pointer;
 }
 
@@ -76,6 +73,7 @@ button {
     border: 1px solid #333;
     background-color: #f9f9f9;
 }
+
 #microfonoBtn {
     display: block;
     width: 125px;
