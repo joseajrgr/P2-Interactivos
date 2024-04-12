@@ -1,0 +1,6 @@
+{
+    "Zapatillas deportivas Kike": {"precio": 80, "imagen": "img/zapatillas.jpg"},
+    "Camiseta": {"precio": 33, "imagen": "img/camiseta.jpg"},
+    "Lavadora": {"precio": 330, "imagen": "img/lavadora.jpg"},
+    "Lámpara": {"precio": 35, "imagen": "img/lampara.png"}
+}
