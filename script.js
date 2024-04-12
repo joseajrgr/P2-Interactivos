@@ -5,7 +5,6 @@ fetch('productos.json')
     .then(data => listaProductos = data)
     .catch(error => console.error('Error:', error));
 
-
 function cargarProductos() {
     var lista = document.getElementById('listaProductos');
     lista.innerHTML = ''; // Limpiar la lista
