@@ -1,10 +1,37 @@
-var listaProductos = {
-    "Zapatillas deportivas Kike": 80,
-    "Camiseta": 33,
-    "Lavadora": 330,
-    "Lámpara": 35
-};
+var listaProductos = {};
 
+fetch('productos.json')
+    .then(response => response.json())
+    .then(data => listaProductos = data)
+    .catch(error => console.error('Error:', error));
+
+
+function cargarProductos() {
+    var lista = document.getElementById('listaProductos');
+    lista.innerHTML = ''; // Limpiar la lista
+
+    for (var producto in listaProductos) {
+        var li = document.createElement('li');
+        var img = document.createElement('img');
+        img.src = listaProductos[producto].imagen;
+        img.alt = producto;
+        img.width = "100%";
+        li.appendChild(img);
+        li.appendChild(document.createTextNode(producto + ' - ' + listaProductos[producto].precio + '€'));
+        lista.appendChild(li);
+    }
+}
+
+// Llamar a la función después de cargar los productos
+fetch('productos.json')
+    .then(response => response.json())
+    .then(data => {
+        listaProductos = data;
+        cargarProductos();
+    })
+    .catch(error => console.error('Error:', error));
+    
+    
 var costeTotal = 0;
 function agregarAlCarrito(producto, cantidad = 1) {
     if (producto === undefined) {
