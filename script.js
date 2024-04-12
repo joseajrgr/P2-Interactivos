@@ -33,6 +33,10 @@ fetch('productos.json')
     
     
 var costeTotal = 0;
+function actualizarCosteTotal() {
+    var divCosteTotal = document.getElementById("costeTotal");
+    divCosteTotal.textContent = "Coste total: " + costeTotal + "€";
+}
 function agregarAlCarrito(producto, cantidad = 1) {
     if (producto === undefined) {
         var productoInput = document.getElementById("productoInput");
@@ -62,7 +66,7 @@ function agregarAlCarrito(producto, cantidad = 1) {
         }
 
         costeTotal += listaProductos[productoEnLista] * cantidad;
-        console.log('Coste total del carrito: $' + costeTotal);
+        actualizarCosteTotal();
     } else {
         console.log('Lo sentimos, no encontramos el producto que busca.');
     }
@@ -80,7 +84,7 @@ function eliminarDelCarrito(producto) {
         if (itemAEliminar) {
             carrito.removeChild(itemAEliminar);
             costeTotal -= listaProductos[productoEnLista];
-            console.log('Coste total del carrito: $' + costeTotal);
+            actualizarCosteTotal();
         } else {
             console.log('El producto no está en el carrito.');
         }
@@ -94,7 +98,7 @@ function eliminarTodoDelCarrito() {
         carrito.removeChild(carrito.firstChild);
     }
     costeTotal = 0;
-    console.log('Se han eliminado todos los productos del carrito.');
+    actualizarCosteTotal();
 }
 function convertirNumeroPalabraANumero(palabra) {
     switch (palabra) {
