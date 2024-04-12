@@ -1,20 +1,29 @@
 var listaProductos = {
     "Zapatillas deportivas Kike": 80,
-    "Camiseta": 20,
-    "Lavadora": 120,
+    "Camiseta": 33,
+    "Lavadora": 330,
     "Lámpara": 35
 };
 
 var costeTotal = 0;
-
 function agregarAlCarrito(producto, cantidad = 1) {
     if (producto === undefined) {
         var productoInput = document.getElementById("productoInput");
         var producto = productoInput.value.trim();
         productoInput.value = "";
+    } else {
+        var parts = producto.split(' ');
+        if (parts.length > 1 && !isNaN(parts[0])) {
+            cantidad = parseInt(parts[0]);
+            producto = parts.slice(1).join(' ');
+        } else if (parts.length > 1 && !isNaN(convertirNumeroPalabraANumero(parts[0]))) {
+            cantidad = convertirNumeroPalabraANumero(parts[0]);
+            producto = parts.slice(1).join(' ');
+        }
     }
+
     console.log('Intentando agregar al carrito: ' + producto);
-   
+
     var productoEnMinusculas = producto.toLowerCase();
     var productoEnLista = Object.keys(listaProductos).find(key => key.toLowerCase() === productoEnMinusculas || key.toLowerCase() + 's' === productoEnMinusculas);
     if (producto !== "" && productoEnLista) {
