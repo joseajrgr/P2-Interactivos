@@ -15,7 +15,7 @@ function cargarProductos() {
         var img = document.createElement('img');
         img.src = listaProductos[producto].imagen;
         img.alt = producto;
-        img.width = "100%";
+        img.width = "250";
         li.appendChild(img);
         li.appendChild(document.createTextNode(producto + ' - ' + listaProductos[producto].precio + '€'));
         lista.appendChild(li);
