@@ -57,17 +57,44 @@ function agregarAlCarrito(producto, cantidad = 1) {
     var productoEnMinusculas = producto.toLowerCase();
     var productoEnLista = Object.keys(listaProductos).find(key => key.toLowerCase() === productoEnMinusculas || key.toLowerCase() + 's' === productoEnMinusculas);
     if (producto !== "" && productoEnLista) {
-        var carrito = document.getElementById("carrito");
-        for (var i = 0; i < cantidad; i++) {
-            var li = document.createElement("li");
-            li.textContent = productoEnLista;
-            carrito.appendChild(li);
+        if (!carritoProductos[productoEnLista]) {
+            carritoProductos[productoEnLista] = 0;
         }
+        carritoProductos[productoEnLista] += cantidad;
 
-        costeTotal += listaProductos[productoEnLista] * cantidad;
+        costeTotal += listaProductos[productoEnLista].precio * cantidad;
+        actualizarCarrito();
         actualizarCosteTotal();
     } else {
         console.log('Lo sentimos, no encontramos el producto que busca.');
+    }
+}
+
+var carritoProductos = {};
+
+function actualizarCarrito() {
+    var carrito = document.getElementById("carrito");
+    carrito.innerHTML = ''; // Limpiar el carrito
+
+    for (var producto in carritoProductos) {
+        var li = document.createElement("li");
+        li.textContent = producto + ' - ' + carritoProductos[producto];
+
+        var btnEliminarUno = document.createElement("button");
+        btnEliminarUno.textContent = "Eliminar uno";
+        btnEliminarUno.addEventListener("click", function() {
+            eliminarDelCarrito(producto);
+        });
+        li.appendChild(btnEliminarUno);
+
+        var btnEliminarTodos = document.createElement("button");
+        btnEliminarTodos.textContent = "Eliminar todos";
+        btnEliminarTodos.addEventListener("click", function() {
+            eliminarLosProductos(producto);
+        });
+        li.appendChild(btnEliminarTodos);
+
+        carrito.appendChild(li);
     }
 }
 
@@ -81,14 +108,25 @@ function eliminarDelCarrito(producto) {
         var itemAEliminar = items.find(item => item.textContent.toLowerCase() === productoEnMinusculas);
 
         if (itemAEliminar) {
-            carrito.removeChild(itemAEliminar);
-            costeTotal -= listaProductos[productoEnLista];
+            carritoProductos[productoEnLista]--;
+            if (carritoProductos[productoEnLista] === 0) {
+                delete carritoProductos[productoEnLista];
+            }
+
+            costeTotal -= listaProductos[productoEnLista].precio;
+            actualizarCarrito();
             actualizarCosteTotal();
         } else {
             console.log('El producto no está en el carrito.');
         }
-    } else {
-        console.log('Lo sentimos, no encontramos el producto que busca.');
+    }
+}
+function eliminarLosProductos(producto) {
+    if (carritoProductos[producto]) {
+        costeTotal -= listaProductos[producto].precio * carritoProductos[producto];
+        delete carritoProductos[producto];
+        actualizarCarrito();
+        actualizarCosteTotal();
     }
 }
 function eliminarTodoDelCarrito() {
@@ -97,6 +135,7 @@ function eliminarTodoDelCarrito() {
         carrito.removeChild(carrito.firstChild);
     }
     costeTotal = 0;
+    actualizarCarrito();
     actualizarCosteTotal();
 }
 function convertirNumeroPalabraANumero(palabra) {

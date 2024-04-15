@@ -28,13 +28,23 @@ h1, h2 {
     flex-wrap: wrap;
 }
 
-#listaProductos li, #carrito li {
+#listaProductos li {
     list-style-type: none;
     margin: 10px 0;
     padding: 10px;
     border: 1px solid #000;
     background-color: #fff;
     flex: 1 0 37%;
+    text-align: center;
+}
+
+#carrito li {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #000;
+    background-color: #fff;
+    flex: 1 0 100%;
     text-align: center;
 }
 
