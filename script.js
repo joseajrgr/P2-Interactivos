@@ -5,22 +5,63 @@ fetch('productos.json')
     .then(data => listaProductos = data)
     .catch(error => console.error('Error:', error));
 
-function cargarProductos() {
-    var lista = document.getElementById('listaProductos');
-    lista.innerHTML = ''; // Limpiar la lista
-
-    for (var producto in listaProductos) {
-        var li = document.createElement('li');
-        var img = document.createElement('img');
-        img.src = listaProductos[producto].imagen;
-        img.alt = producto;
-        img.width = "250";
-        li.appendChild(img);
-        li.appendChild(document.createTextNode(producto + ' - ' + listaProductos[producto].precio + '€'));
-        lista.appendChild(li);
+    function cargarProductos() {
+        var lista = document.getElementById('listaProductos');
+        lista.innerHTML = ''; // Limpiar la lista
+    
+        for (var producto in listaProductos) {
+            var li = document.createElement('li');
+    
+            // Texto del producto
+            var divTexto = document.createElement('div');
+            divTexto.className = 'producto-texto';
+            divTexto.textContent = producto + ' - ' + listaProductos[producto].precio + '€';
+            li.appendChild(divTexto);
+    
+            // Estrellas generadas aleatoriamente
+            var divEstrellas = document.createElement('div');
+            divEstrellas.className = 'producto-estrellas';
+            divEstrellas.innerHTML = generarEstrellasAleatorias();
+            li.appendChild(divEstrellas);
+    
+            // Imagen del producto
+            var divImagen = document.createElement('div');
+            divImagen.className = 'producto-imagen';
+            var img = document.createElement('img');
+            img.src = listaProductos[producto].imagen;
+            img.alt = producto;
+            img.width = "250";
+            divImagen.appendChild(img);
+            li.appendChild(divImagen);
+    
+            // Botón de "Comprar"
+            var divBoton = document.createElement('div');
+            divBoton.className = 'producto-boton';
+            var btnComprar = document.createElement('button');
+            btnComprar.textContent = "Comprar";
+            // Asegúrate de que el evento de clic se asigne correctamente
+            btnComprar.addEventListener('click', (function(prod) {
+                return function() {
+                    agregarAlCarrito(prod);
+                };
+            })(producto));
+            divBoton.appendChild(btnComprar);
+            li.appendChild(divBoton);
+    
+            lista.appendChild(li);
+        }
     }
-}
 
+    function generarEstrellasAleatorias() {
+        var estrellas = '';
+        var numEstrellas = Math.floor(Math.random() * 4) + 1; // Genera un número aleatorio de 1 a 4
+    
+        for (var i = 0; i < numEstrellas; i++) {
+            estrellas += '★ '; // Añade una estrella al string
+        }
+    
+        return estrellas;
+    }
 // Llamar a la función después de cargar los productos
 fetch('productos.json')
     .then(response => response.json())
@@ -33,8 +74,19 @@ fetch('productos.json')
     
 var costeTotal = 0;
 function actualizarCosteTotal() {
+    // Inicializa el coste total a 0
+    costeTotal = 0;
+
+    // Recorre todos los productos en el carrito
+    for (var producto in carritoProductos) {
+        // Suma el coste de cada producto al coste total
+        // Asegúrate de que listaProductos[producto].precio contenga el precio correcto del producto
+        costeTotal += listaProductos[producto].precio * carritoProductos[producto];
+    }
+
+    // Actualiza el texto del elemento que muestra el coste total
     var divCosteTotal = document.getElementById("costeTotal");
-    divCosteTotal.textContent = "Coste total: " + costeTotal + "€";
+    divCosteTotal.textContent = "Coste total: " + costeTotal.toFixed(2) + "€";
 }
 function agregarAlCarrito(producto, cantidad = 1) {
     if (producto === undefined) {
@@ -62,7 +114,7 @@ function agregarAlCarrito(producto, cantidad = 1) {
         }
         carritoProductos[productoEnLista] += cantidad;
 
-        costeTotal += listaProductos[productoEnLista].precio * cantidad;
+        
         actualizarCarrito();
         actualizarCosteTotal();
     } else {
@@ -78,26 +130,65 @@ function actualizarCarrito() {
 
     for (var producto in carritoProductos) {
         var li = document.createElement("li");
-        li.textContent = producto + ' - ' + carritoProductos[producto];
+        li.textContent = producto + ' - ';
 
-        var btnEliminarUno = document.createElement("button");
-        btnEliminarUno.textContent = "Eliminar uno";
-        btnEliminarUno.addEventListener("click", function() {
-            eliminarDelCarrito(producto);
-        });
-        li.appendChild(btnEliminarUno);
+        // Botón para quitar 1
+        var btnQuitarUno = document.createElement("button");
+        btnQuitarUno.textContent = "-";
+        btnQuitarUno.className = "carrito-btn carrito-btn-minus"; // Asignar clase
+        btnQuitarUno.addEventListener("click", (function(prod) {
+            return function() {
+                eliminarDelCarrito(prod);
+            };
+        })(producto));
+        li.appendChild(btnQuitarUno);
 
-        var btnEliminarTodos = document.createElement("button");
-        btnEliminarTodos.textContent = "Eliminar todos";
-        btnEliminarTodos.addEventListener("click", function() {
-            eliminarLosProductos(producto);
-        });
-        li.appendChild(btnEliminarTodos);
+        // Mostrar cantidad
+        li.appendChild(document.createTextNode(carritoProductos[producto]));
+
+        // Botón para añadir 1
+        var btnAñadirUno = document.createElement("button");
+        btnAñadirUno.textContent = "+";
+        btnAñadirUno.className = "carrito-btn carrito-btn-plus"; // Asignar clase
+        btnAñadirUno.addEventListener("click", (function(prod) {
+            return function() {
+                agregarAlCarrito(prod, 1); // Asegúrate de que esta función actualice correctamente la cantidad
+            };
+        })(producto));
+        li.appendChild(btnAñadirUno);
+
+        // Botón para quitar todos
+        var btnQuitarTodos = document.createElement("button");
+        btnQuitarTodos.textContent = "X";
+        btnQuitarTodos.className = "carrito-btn carrito-btn-remove"; // Asignar clase
+        btnQuitarTodos.addEventListener("click", (function(prod) {
+            return function() {
+                eliminarItemDelCarrito(prod); // Asegúrate de que esta función elimine todos los ítems del producto específico
+            };
+        })(producto));
+        li.appendChild(btnQuitarTodos);
 
         carrito.appendChild(li);
+        var numeroItems = Object.keys(carritoProductos).reduce(function(total, producto) {
+            return total + carritoProductos[producto];
+        }, 0);
+    
+        document.getElementById("numeroItemsCarrito").textContent = numeroItems;
     }
 }
+function eliminarItemDelCarrito(producto) {
+    // Verifica si el producto existe en el carrito
+    if (carritoProductos.hasOwnProperty(producto)) {
+        // Elimina el producto del carrito
+        delete carritoProductos[producto];
 
+        // Actualiza el carrito y el coste total para reflejar los cambios
+        actualizarCarrito();
+        actualizarCosteTotal();
+    } else {
+        console.log('El producto no está en el carrito.');
+    }
+}
 function eliminarDelCarrito(producto) {
     var productoEnMinusculas = producto.toLowerCase();
     var productoEnLista = Object.keys(listaProductos).find(key => key.toLowerCase() === productoEnMinusculas || key.toLowerCase() + 's' === productoEnMinusculas);
@@ -113,7 +204,7 @@ function eliminarDelCarrito(producto) {
                 delete carritoProductos[productoEnLista];
             }
 
-            costeTotal -= listaProductos[productoEnLista].precio;
+            
             actualizarCarrito();
             actualizarCosteTotal();
         } else {
@@ -121,20 +212,31 @@ function eliminarDelCarrito(producto) {
         }
     }
 }
-function eliminarLosProductos(producto) {
-    if (carritoProductos[producto]) {
-        costeTotal -= listaProductos[producto].precio * carritoProductos[producto];
-        delete carritoProductos[producto];
+function eliminarDelCarrito(producto) {
+    var productoEnMinusculas = producto.toLowerCase();
+    var productoEnLista = Object.keys(carritoProductos).find(key => key.toLowerCase() === productoEnMinusculas);
+    
+    if (productoEnLista) {
+        carritoProductos[productoEnLista]--;
+        if (carritoProductos[productoEnLista] === 0) {
+            delete carritoProductos[productoEnLista];
+        }
+
+        // Actualizar el coste total y el carrito
+
         actualizarCarrito();
         actualizarCosteTotal();
+    } else {
+        console.log('El producto no está en el carrito.');
     }
 }
+
 function eliminarTodoDelCarrito() {
     var carrito = document.getElementById("carrito");
     while (carrito.firstChild) {
         carrito.removeChild(carrito.firstChild);
     }
-    costeTotal = 0;
+
     actualizarCarrito();
     actualizarCosteTotal();
 }
@@ -202,5 +304,22 @@ function iniciarReconocimientoVoz() {
         alert('Tu navegador no soporta reconocimiento de voz.');
     }
 }
+document.getElementById("mostrarCarritoBtn").addEventListener("click", function() {
+    var carrito = document.getElementById("popupCarrito");
+    
+    carrito.style.display = "block"; // Muestra el carrito
+    // Utiliza setTimeout para asegurar que el carrito esté visible antes de ajustar la posición
+    setTimeout(function() {
+        carrito.style.bottom = "0"; // Ajusta la posición para que el carrito aparezca desde la parte inferior
+    }, 10); // Ajusta el tiempo de espera según sea necesario
+    
+});
+document.getElementById("cerrarCarritoBtn").addEventListener("click", function() {
+    var popupCarrito = document.getElementById("popupCarrito");
+    popupCarrito.style.bottom = "-100%";
+    setTimeout(function() {
+        popupCarrito.style.display = "none";
+    }, 500);
+});
 // Añadir un event listener al botón de microfono
 document.getElementById("microfonoBtn").addEventListener("click", iniciarReconocimientoVoz);

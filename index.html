@@ -10,12 +10,31 @@
 
     <input id="productoInput" type="text" placeholder="¿Qué quieres comprar?">
     <button id="agregarBtn" onclick="agregarAlCarrito()">+</button>
-
+    <!-- Sección de categorías -->
+    <div class="categorias">
+        <div class="categoria">Categoría 1</div>
+        <div class="categoria">Categoría 2</div>
+        <div class="categoria">Categoría 3</div>
+        <div class="categoria">Categoría 4</div>
+        <div class="categoria">Categoría 5</div>
+        <div class="categoria">Categoría 5</div>
+        <div class="categoria">Categoría 5</div>
+        
+        <!-- Añade más categorías según sea necesario -->
+    </div>
     <ul id="listaProductos"></ul>
+    <button id="mostrarCarritoBtn">
+        <img src="img/carrito.png" alt="Carrito">
+    <span id="numeroItemsCarrito">0</span>
+    </button>
+    <div id="popupCarrito">    
+        <button id="cerrarCarritoBtn">x</button>
 
-    <h2>Carrito de compras</h2>
-    <div id="costeTotal">Coste total: 0€</div>
-    <ul id="carrito"></ul>
+        <h2>Carrito de compras</h2>
+        <div id="costeTotal">Coste total: 0€</div>
+        <ul id="carrito"></ul> 
+
+    </div>
     <img src="/img/mic_btn.png" alt="Botón micrófono" id="microfonoBtn">
     <script src="script.js"></script>
 </body>

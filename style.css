@@ -26,16 +26,77 @@ h1, h2 {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
 }
-
+#popupCarrito {
+    display: none; /* Oculta el carrito por defecto */
+    position: fixed; /* Posiciona el carrito de manera fija */
+    bottom: -100%; /* Inicialmente, el carrito está fuera de la vista */
+    left: 0;
+    width: 100%; /* Asegura que el carrito ocupe todo el ancho */
+    height: 50%; /* Ajusta la altura según sea necesario */
+    background-color: white; /* Color de fondo del carrito */
+    z-index: 50; /* Asegura que el carrito esté por encima de otros elementos */
+    overflow-y: auto; /* Permite el desplazamiento vertical dentro del carrito */
+    transition: bottom 0.5s ease-out; /* Añade una transición suave al mostrar/ocultar el carrito */
+    border-top-left-radius: 50px; /* Bordes redondeados por arriba */
+    border-top-right-radius: 50px;
+    box-shadow: 0 -2px 70px rgba(0, 0, 0, 0.1); /* Sombra hacia arriba */
+}
 #listaProductos li {
+    position: relative;
     list-style-type: none;
     margin: 10px 0;
+    min-height: 300px;
     padding: 10px;
     border: 1px solid #000;
     background-color: #fff;
-    flex: 1 0 37%;
+    flex: 1 0 100%; /* Cambia a 100% para que solo se muestre un producto a la vez */
     text-align: center;
+    width: 90%;
+}
+.producto-texto {
+    position: relative;
+    right: 0px;
+    left: 65px;
+    z-index: 2;
+    order: 1; /* Asegura que el texto aparezca arriba */
+    
+    
+    margin-top: 25px;
+}
+
+.producto-imagen {
+    position: absolute;
+    top: 30px;
+    z-index: 1;
+    left: 20px;
+    order: 2; /* Asegura que la imagen aparezca en el medio */
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho */
+    text-align: left; /* Centra la imagen */
+}
+.producto-estrellas {
+    font-size: 55px; /* Ajusta el tamaño de las estrellas */
+    text-align: center; /* Centra las estrellas */
+}
+.producto-boton {
+    z-index: 3;
+    position: absolute;
+    text-align: right; /* Alinea el botón a la derecha */
+    padding-right: 10px; /* Añade un poco de espacio a la derecha */
+    bottom: 30px;
+    right: 20px;
+    margin-top: -20px;
+}
+.producto-boton button {
+    font-size: 25px; /* Aumenta el tamaño de la fuente */
+    padding: 30px 40px; /* Aumenta el padding */
+    border-radius: 50px; /* Hace el botón redondo */
+    background-color: #f44336; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Elimina el borde */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
 }
 
 #carrito li {
@@ -93,6 +154,7 @@ h1, h2 {
 }
 
 #microfonoBtn {
+    z-index: 48;
     display: block;
     width: 125px;
     height: 125px;
@@ -102,4 +164,92 @@ h1, h2 {
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
+}
+
+/* Estilos para los botones del carrito */
+.carrito-btn {
+    border: none;
+    padding: 10px 15px; /* Aumenta el padding para hacerlos más grandes */
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 18px; /* Aumenta el tamaño de fuente para hacerlos más grandes */
+    border-radius: 50%; /* Hace los botones redondos */
+}
+
+.carrito-btn-minus, .carrito-btn-plus {
+    background-color: #ffa000; /* Rojo */
+    color: white;
+    font-size: 40px;
+    width: 60px;
+    margin: 10px;
+}
+
+.carrito-btn-remove {
+    background-color: #000000; /* Rojo */
+    color: white;
+    font-size: 40px;
+    width: 60px;
+    margin: 10px;
+}
+
+.categorias {
+    margin-left: 25px;
+    display: flex;
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+    white-space: nowrap; /* Evita que los elementos se ajusten a la siguiente línea */
+    margin-top: 20px; /* Añade un poco de espacio por encima de las categorías */
+    margin-bottom: 10px;
+}
+
+.categoria {
+    padding: 10px;
+    margin-right: 10px;
+    background-color: #f44336; /* Color de fondo de las categorías */
+    color: white; /* Color del texto de las categorías */
+    border-radius: 10px; /* Hace las categorías redondas */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    flex: 0 0 auto; /* Evita que las categorías se estiren */
+    font-size: 40px; /* Aumenta el tamaño de la fuente */
+}
+
+#mostrarCarritoBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#mostrarCarritoBtn img {
+    width: 85px;
+    height: 85px;
+}
+
+#numeroItemsCarrito {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 25px;
+    width: 30px;
+    height: 30px;
+}
+
+#cerrarCarritoBtn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: #f44336; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Elimina el borde */
+    padding: 10px 20px; /* Ajusta el padding */
+    border-radius: 50%; /* Hace el botón redondo */
+    font-size: 20px; /* Aumenta el tamaño de la fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    font-size: 30px;
 }
