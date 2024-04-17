@@ -268,11 +268,13 @@ function iniciarReconocimientoVoz() {
         var microfonoBtn = document.getElementById('microfonoBtn');
 
         recognition.onstart = function() {
-            microfonoBtn.style.backgroundColor = 'lightgreen';
+            microfonoBtn.classList.add('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone.png" alt="Botón micrófono activo">'; /* Cambia a otra imagen */
         };
-    
+        
         recognition.onend = function() {
-            microfonoBtn.style.backgroundColor = '';
+            microfonoBtn.classList.remove('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone-slash.png" alt="Botón micrófono">'; /* Cambia a la imagen original */
         };
 
         recognition.onresult = function(event) {
@@ -323,3 +325,76 @@ document.getElementById("cerrarCarritoBtn").addEventListener("click", function()
 });
 // Añadir un event listener al botón de microfono
 document.getElementById("microfonoBtn").addEventListener("click", iniciarReconocimientoVoz);
+
+
+
+
+var touchstartX = 0;
+var touchendX = 0;
+var productoActual = 0; // Índice del producto actual
+var modoUnaMano = false; // Añade esta línea para declarar la variable
+
+function handleGesture() {
+    var lista = document.getElementById('listaProductos');
+    if (touchendX < touchstartX) {
+        // Deslizar a la izquierda: mostrar el siguiente producto
+        lista.children[productoActual].style.display = 'none';
+        productoActual = (productoActual + 1) % lista.children.length;
+        lista.children[productoActual].style.display = 'block';
+    }
+    if (touchendX > touchstartX) {
+        // Deslizar a la derecha: mostrar el producto anterior
+        lista.children[productoActual].style.display = 'none';
+        productoActual = (productoActual - 1 + lista.children.length) % lista.children.length;
+        lista.children[productoActual].style.display = 'block';
+    }
+}
+
+document.getElementById('listaProductos').addEventListener('touchstart', function(event) {
+    if (modoUnaMano) {
+        touchstartX = event.changedTouches[0].screenX;
+    }
+}, false);
+
+document.getElementById('listaProductos').addEventListener('touchend', function(event) {
+    if (modoUnaMano) {
+        touchendX = event.changedTouches[0].screenX;
+        handleGesture();
+    }
+}, false);
+
+// Añade un controlador de eventos al botón de modo una mano
+document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
+    modoUnaMano = !modoUnaMano;
+    var lista = document.getElementById('listaProductos');
+    var categorias = document.querySelector('.categorias');
+    var input = document.getElementById('productoInput');
+    var agregarBtn = document.getElementById('agregarBtn');
+    var micBtn = document.getElementById('microfonoBtn');
+    var body = document.querySelector('body');
+
+    if (modoUnaMano) {
+        // Ocultar todos los productos excepto el primero
+        for (var i = 0; i < lista.children.length; i++) {
+            lista.children[i].style.display = i === 0 ? 'block' : 'none';
+            lista.children[i].style.heigh = '80%';
+        }
+        // Mover la barra de búsqueda y los botones al final del body
+        body.appendChild(input);
+        body.appendChild(agregarBtn);
+        body.appendChild(micBtn);
+        // Mover las categorías encima de la barra de búsqueda
+        body.insertBefore(categorias, input);
+    } else {
+        // Mostrar todos los productos
+        for (var i = 0; i < lista.children.length; i++) {
+            lista.children[i].style.display = 'block';
+        }
+        // Mover la barra de búsqueda y los botones a su posición original
+        body.insertBefore(input, lista);
+        body.insertBefore(agregarBtn, lista);
+        body.insertBefore(micBtn, lista);
+        // Mover las categorías a su posición original
+        body.insertBefore(categorias, lista);
+    }
+});

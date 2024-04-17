@@ -161,11 +161,50 @@ h1, h2 {
     margin: 20px auto;
     font-size: 30px;
     position: fixed;
-    left: 50%;
+    left: 40%; /* Ajustado para centrar ambos botones */
     bottom: 0;
     transform: translateX(-50%);
+    border: 10px solid black; /* Borde negro */
+    border-radius: 50%; /* Hace que sea un círculo */
 }
 
+#microfonoBtn::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white; /* Círculo blanco */
+    border-radius: 50%; /* Hace que sea un círculo */
+    z-index: -1; /* Coloca el círculo detrás de la imagen */
+}
+
+#microfonoBtn.active::before {
+    background: lightgreen; /* Cambia el fondo blanco a verde */
+}
+
+#microfonoBtn img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 50%; /* Hace que la imagen sea un círculo */
+}
+
+#modoUnaManoBtn {
+    z-index: 48;
+    display: block;
+    width: 125px;
+    height: 125px;
+    margin: 20px auto;
+    font-size: 30px;
+    position: fixed;
+    left: 60%; /* Ajustado para centrar ambos botones */
+    bottom: 0;
+    transform: translateX(-50%);
+    background-image: url('/img/unamano.png'); /* Ruta a tu imagen */
+    background-size: cover; /* Asegura que la imagen cubra todo el botón */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+        border-radius: 50%; /* Hace el botón circular */
+}
 /* Estilos para los botones del carrito */
 .carrito-btn {
     border: none;
