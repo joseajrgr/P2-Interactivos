@@ -164,6 +164,29 @@ h1, h2 {
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
+    border: 10px solid black; /* Borde negro */
+    border-radius: 50%; /* Hace que sea un círculo */
+}
+
+#microfonoBtn::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white; /* Círculo blanco */
+    border-radius: 50%; /* Hace que sea un círculo */
+    z-index: -1; /* Coloca el círculo detrás de la imagen */
+}
+
+#microfonoBtn.active::before {
+    background: lightgreen; /* Cambia el fondo blanco a verde */
+}
+
+#microfonoBtn img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 50%; /* Hace que la imagen sea un círculo */
 }
 
 /* Estilos para los botones del carrito */

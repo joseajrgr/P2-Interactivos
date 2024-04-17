@@ -266,13 +266,15 @@ function iniciarReconocimientoVoz() {
         recognition.maxAlternatives = 1;
 
         var microfonoBtn = document.getElementById('microfonoBtn');
-
-        recognition.onstart = function() {
-            microfonoBtn.style.backgroundColor = 'lightgreen';
-        };
     
+        recognition.onstart = function() {
+            microfonoBtn.classList.add('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone.png" alt="Botón micrófono activo">'; /* Cambia a otra imagen */
+        };
+        
         recognition.onend = function() {
-            microfonoBtn.style.backgroundColor = '';
+            microfonoBtn.classList.remove('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone-slash.png" alt="Botón micrófono">'; /* Cambia a la imagen original */
         };
 
         recognition.onresult = function(event) {
