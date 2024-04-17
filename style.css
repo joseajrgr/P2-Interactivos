@@ -292,3 +292,38 @@ h1, h2 {
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
     font-size: 30px;
 }
+
+/* Estilos para el modo de una sola mano */
+.modo-una-mano .producto-texto {
+    text-align: center;
+    margin-top: 20px;
+    left: 0;
+    font-size: 50px;
+}
+
+.modo-una-mano .producto-imagen {
+    position: static;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.modo-una-mano .producto-imagen img {
+    max-width: 80%;
+    max-height: 500px;
+    width: 500px;
+    object-fit: contain;
+}
+
+.modo-una-mano .producto-estrellas {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.modo-una-mano .producto-boton{
+    position: static;
+    text-align: center;
+    margin-top: 20px;
+}
+.modo-una-mano .producto-boton button{
+    font-size: 50px;
+}

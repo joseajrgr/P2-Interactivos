@@ -331,7 +331,75 @@ document.getElementById("cerrarCarritoBtn").addEventListener("click", function()
 // Añadir un event listener al botón de microfono
 document.getElementById("microfonoBtn").addEventListener("click", iniciarReconocimientoVoz);
 
+var modoUnaMano = false;
+var productoActual = 0;
+var ultimaOrientacion = null;
+var cooldownDuracion = 2000; // 2 segundos
+ultimaInclinacion = null;
+ultimoCambio =null;
 
+function mostrarProductoActual() {
+    var lista = document.getElementById('listaProductos');
+    var productos = lista.getElementsByTagName('li');
+
+    for (var i = 0; i < productos.length; i++) {
+        if (i === productoActual) {
+            productos[i].style.display = 'block';
+        } else {
+            productos[i].style.display = 'none';
+        }
+    }
+}
+
+function handleOrientation(event) {
+    if (modoUnaMano) {
+        var orientacion = event.gamma;
+        var inclinacion = event.beta;
+        var tiempoActual = new Date().getTime();
+
+        console.log('Orientación:', orientacion);
+        console.log('Inclinación:', inclinacion);
+
+        if (ultimaOrientacion !== null && ultimaInclinacion !== null && tiempoActual - ultimoCambio >= cooldownDuracion) {
+            console.log('Última orientación:', ultimaOrientacion);
+            console.log('Última inclinación:', ultimaInclinacion);
+            console.log('Diferencia de orientación:', orientacion - ultimaOrientacion);
+            console.log('Diferencia de inclinación:', inclinacion - ultimaInclinacion);
+
+            if (inclinacion > ultimaInclinacion + 10) {
+                console.log('Inclinación hacia adelante');
+                // Cambiar al siguiente producto
+                productoActual = (productoActual + 1) % Object.keys(listaProductos).length;
+                mostrarProductoActual();
+                ultimoCambio = tiempoActual;
+            } else if (inclinacion < ultimaInclinacion - 10) {
+                console.log('Inclinación hacia atrás');
+                // Cambiar al producto anterior
+                productoActual = (productoActual - 1 + Object.keys(listaProductos).length) % Object.keys(listaProductos).length;
+                mostrarProductoActual();
+                ultimoCambio = tiempoActual;
+            } else if (orientacion > ultimaOrientacion + 10) {
+                console.log('Movimiento hacia la derecha');
+                // Añadir el producto actual al carrito
+                agregarAlCarrito(Object.keys(listaProductos)[productoActual]);
+                ultimoCambio = tiempoActual;
+            } else if (orientacion < ultimaOrientacion - 10) {
+                console.log('Movimiento hacia la izquierda');
+                // Quitar el producto actual del carrito
+                eliminarDelCarrito(Object.keys(listaProductos)[productoActual]);
+                ultimoCambio = tiempoActual;
+            }
+        }
+
+        ultimaOrientacion = orientacion;
+        ultimaInclinacion = inclinacion;
+    }
+}
+
+window.addEventListener('deviceorientation', function(event) {
+    console.log('Evento deviceorientation disparado');
+    handleOrientation(event);
+});
 
 
 var touchstartX = 0;
@@ -384,7 +452,13 @@ document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
             lista.children[i].style.display = i === 0 ? 'block' : 'none';
             lista.children[i].style.heigh = '80%';
         }
+        // Reiniciar la orientación y el producto actual
+        ultimaOrientacion = null;
+        // Reiniciar la inclinación y el producto actual
+        ultimaInclinacion = null;
+        productoActual = 0;
         // Mover la barra de búsqueda y los botones al final del body
+        body.classList.add('modo-una-mano'); // Agrega la clase al body
         body.appendChild(input);
         body.appendChild(agregarBtn);
         body.appendChild(micBtn);
@@ -396,6 +470,7 @@ document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
             lista.children[i].style.display = 'block';
         }
         // Mover la barra de búsqueda y los botones a su posición original
+        body.classList.remove('modo-una-mano'); // Remueve la clase del bod
         body.insertBefore(input, lista);
         body.insertBefore(agregarBtn, lista);
         body.insertBefore(micBtn, lista);
