@@ -172,7 +172,7 @@ function actualizarCarrito() {
         btnAñadirUno.className = "carrito-btn carrito-btn-plus"; // Asignar clase
         btnAñadirUno.addEventListener("click", (function(prod) {
             return function() {
-                agregarAlCarrito(prod, 1); // Asegúrate de que esta función actualice correctamente la cantidad
+                agregarAlCarrito(prod, 1); 
             };
         })(producto));
         li.appendChild(btnAñadirUno);
@@ -183,7 +183,7 @@ function actualizarCarrito() {
         btnQuitarTodos.className = "carrito-btn carrito-btn-remove"; // Asignar clase
         btnQuitarTodos.addEventListener("click", (function(prod) {
             return function() {
-                eliminarItemDelCarrito(prod); // Asegúrate de que esta función elimine todos los ítems del producto específico
+                eliminarItemDelCarrito(prod); 
             };
         })(producto));
         li.appendChild(btnQuitarTodos);
@@ -273,7 +273,7 @@ function convertirNumeroPalabraANumero(palabra) {
         case 'ocho': return 8;
         case 'nueve': return 9;
         case 'diez': return 10;
-        // ... add more cases as needed ...
+    
         default: return NaN;
     }
 }
@@ -311,7 +311,7 @@ function iniciarReconocimientoVoz() {
                 var cantidad = convertirNumeroPalabraANumero(parts[0]);
                 var producto = parts.slice(1).join(' ');
                 if (isNaN(cantidad)) {
-                    // If the first part is not a number, assume the quantity is 1 and the product is the whole string
+                    
                     cantidad = 1;
                     producto = parts.join(' ');
                 }

@@ -191,15 +191,15 @@ h1, h2 {
 #modoUnaManoBtn {
     z-index: 48;
     display: block;
-    width: 125px;
-    height: 125px;
+    width: 150px;
+    height: 150px;
     margin: 20px auto;
     font-size: 30px;
     position: fixed;
     left: 60%; /* Ajustado para centrar ambos botones */
     bottom: 0;
     transform: translateX(-50%);
-    background-image: url('/img/unamano.png'); /* Ruta a tu imagen */
+    background-image: url('/img/unamano.png'); 
     background-size: cover; /* Asegura que la imagen cubra todo el botón */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
         border-radius: 50%; /* Hace el botón circular */
