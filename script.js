@@ -11,7 +11,7 @@ fetch('productos.json')
     
         for (var producto in listaProductos) {
             var li = document.createElement('li');
-    
+            li.className = 'producto'; // Agregar la clase 'producto'
             // Texto del producto
             var divTexto = document.createElement('div');
             divTexto.className = 'producto-texto';
@@ -478,3 +478,21 @@ document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
         body.insertBefore(categorias, lista);
     }
 });
+
+function filtrarProductos() {
+    var input = document.getElementById('productoInput');
+    var filtro = input.value.toLowerCase();
+    var lista = document.getElementById('listaProductos');
+    var productos = lista.getElementsByTagName('li');
+
+    for (var i = 0; i < productos.length; i++) {
+        var producto = productos[i];
+        var texto = producto.textContent.toLowerCase();
+
+        if (texto.includes(filtro)) {
+            producto.style.display = 'block';
+        } else {
+            producto.style.display = 'none';
+        }
+    }
+}
