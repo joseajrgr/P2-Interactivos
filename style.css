@@ -8,7 +8,7 @@ body {
 header {
     background-color: #257;
     color: white;
-    padding: 10px 0;
+    padding: 15px 0;
     text-align: center;
     bottom: 20px;
 }
@@ -53,17 +53,14 @@ h1, h2 {
     border: 1px solid #000;
     background-color: #fff;
     flex: 1 0 100%; /* Cambia a 100% para que solo se muestre un producto a la vez */
-    text-align: center;
     width: 90%;
 }
 .producto-texto {
-    position: relative;
+    position: absolute;
     right: 0px;
-    left: 65px;
+    left: 390px;
     z-index: 2;
     order: 1; /* Asegura que el texto aparezca arriba */
-    
-    
     margin-top: 25px;
 }
 
@@ -74,11 +71,13 @@ h1, h2 {
     left: 20px;
     order: 2; /* Asegura que la imagen aparezca en el medio */
     width: 100%; /* Asegura que la imagen ocupe todo el ancho */
-    text-align: left; /* Centra la imagen */
+    text-align: left;
 }
 .producto-estrellas {
+    top: 80px;
     font-size: 55px; /* Ajusta el tamaño de las estrellas */
-    text-align: center; /* Centra las estrellas */
+    position: absolute;
+    left: 390px;
 }
 .producto-boton {
     z-index: 3;
@@ -241,7 +240,9 @@ h1, h2 {
 }
 
 .categoria {
-    padding: 10px;
+    width: 275px;
+    padding: 10px 0px;
+    text-align: center;
     margin-right: 10px;
     background-color: #f44336; /* Color de fondo de las categorías */
     color: white; /* Color del texto de las categorías */
@@ -253,17 +254,20 @@ h1, h2 {
 
 #mostrarCarritoBtn {
     position: fixed;
+    width: 90px;
+    height: 90px;
     top: 20px;
     right: 20px;
     z-index: 100;
-    background: none;
-    border: none;
     cursor: pointer;
+    border-radius: 50%;
+    background-color: white;
+    border: 5px solid black; /* Borde negro */
 }
 
 #mostrarCarritoBtn img {
-    width: 85px;
-    height: 85px;
+    width: 90%;
+    height: 90%;
 }
 
 #numeroItemsCarrito {
@@ -294,7 +298,12 @@ h1, h2 {
 }
 
 /* Estilos para el modo de una sola mano */
+.modo-una-mano .lista-productos li {
+    text-align: center;
+}
+
 .modo-una-mano .producto-texto {
+    position: relative;
     text-align: center;
     margin-top: 20px;
     left: 0;
@@ -315,6 +324,7 @@ h1, h2 {
 }
 
 .modo-una-mano .producto-estrellas {
+    position: unset;
     text-align: center;
     margin-top: 10px;
 }
@@ -326,4 +336,10 @@ h1, h2 {
 }
 .modo-una-mano .producto-boton button{
     font-size: 50px;
+}
+
+.modo-una-mano #mostrarCarritoBtn {
+    top: unset;
+    bottom: 30px;
+    right: 50px;
 }
