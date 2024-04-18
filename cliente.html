@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="cliente.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda de Productos</h1>
+    </header>
+
+    <input id="productoInput" type="text" placeholder="¿Qué quieres comprar?" oninput="filtrarProductos()">
+    <button id="agregarBtn" onclick="agregarAlCarrito()">+</button>
+    <!-- Sección de categorías -->
+    <div class="categorias">
+        <div class="categoria">Hogar</div>
+        <div class="categoria">Moda</div>
+        <div class="categoria">Deporte</div>
+        <div class="categoria">Categoría 4</div>
+        <div class="categoria">Categoría 5</div>
+        <div class="categoria">Categoría 5</div>
+        <div class="categoria">Categoría 5</div>
+        
+        <!-- Añade más categorías según sea necesario -->
+    </div>
+    <ul id="listaProductos"></ul>
+    <button id="mostrarCarritoBtn">
+        <img src="img/carrito.png" alt="Carrito">
+    <span id="numeroItemsCarrito">0</span>
+    </button>
+    <div id="popupCarrito">    
+        <button id="cerrarCarritoBtn">x</button>
+
+        <h2>Carrito de compras</h2>
+        <div id="costeTotal">Coste total: 0€</div>
+        <ul id="carrito"></ul> 
+
+    </div>
+    <div id="microfonoBtn">
+        <img src="/img/microphone-slash.png" alt="Botón micrófono">
+    </div> 
+    <button id="modoUnaManoBtn"></button> <!-- Botón de Modo una mano -->
+    <script src="cliente.js"></script>
+</body>
+</html>
