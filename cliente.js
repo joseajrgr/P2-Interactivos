@@ -1,15 +1,18 @@
 var listaProductos = {};
+var categoriaSeleccionada = 'Todo'; // Categoría inicial
 
 fetch('productos.json')
     .then(response => response.json())
     .then(data => listaProductos = data)
     .catch(error => console.error('Error:', error));
 
-    function cargarProductos() {
-        var lista = document.getElementById('listaProductos');
-        lista.innerHTML = ''; // Limpiar la lista
-    
-        for (var producto in listaProductos) {
+function cargarProductos() {
+    var lista = document.getElementById('listaProductos');
+    lista.innerHTML = ''; // Limpiar la lista
+
+    for (var producto in listaProductos) {
+        // Si la categoría del producto coincide con la seleccionada, o si la seleccionada es 'Todos'
+        if (listaProductos[producto].categoria == categoriaSeleccionada || categoriaSeleccionada == 'Todo') {
             var li = document.createElement('li');
             li.className = 'producto'; // Agregar la clase 'producto'
             // Texto del producto
@@ -51,17 +54,26 @@ fetch('productos.json')
             lista.appendChild(li);
         }
     }
+}
 
-    function generarEstrellasAleatorias() {
-        var estrellas = '';
-        var numEstrellas = Math.floor(Math.random() * 4) + 1; // Genera un número aleatorio de 1 a 4
-    
-        for (var i = 0; i < numEstrellas; i++) {
-            estrellas += '★ '; // Añade una estrella al string
-        }
-    
-        return estrellas;
+var categorias = document.getElementsByClassName('categoria');
+for (var i = 0; i < categorias.length; i++) {
+    categorias[i].addEventListener('click', function() {
+        categoriaSeleccionada = this.textContent;
+        cargarProductos();
+    });
+}
+
+function generarEstrellasAleatorias() {
+    var estrellas = '';
+    var numEstrellas = Math.floor(Math.random() * 4) + 1; // Genera un número aleatorio de 1 a 4
+
+    for (var i = 0; i < numEstrellas; i++) {
+        estrellas += '★ '; // Añade una estrella al string
     }
+
+    return estrellas;
+}
 // Llamar a la función después de cargar los productos
 fetch('productos.json')
     .then(response => response.json())
