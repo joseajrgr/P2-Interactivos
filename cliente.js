@@ -10,8 +10,9 @@ function cargarProductos() {
     var lista = document.getElementById('listaProductos');
     lista.innerHTML = ''; // Limpiar la lista
 
+    var productoIndex = 0;
     for (var producto in listaProductos) {
-        // Si la categoría del producto coincide con la seleccionada, o si la seleccionada es 'Todos'
+        // Si la categoría del producto coincide con la seleccionada, o si la seleccionada es 'Todo'
         if (listaProductos[producto].categoria == categoriaSeleccionada || categoriaSeleccionada == 'Todo') {
             var li = document.createElement('li');
             li.className = 'producto'; // Agregar la clase 'producto'
@@ -51,7 +52,13 @@ function cargarProductos() {
             divBoton.appendChild(btnComprar);
             li.appendChild(divBoton);
     
+            // Si estamos en modo de una sola mano, solo mostramos el primer producto
+            if (modoUnaMano) {
+                li.style.display = productoIndex === 0 ? 'block' : 'none';
+            }
+
             lista.appendChild(li);
+            productoIndex++;
         }
     }
 }
@@ -60,6 +67,7 @@ var categorias = document.getElementsByClassName('categoria');
 for (var i = 0; i < categorias.length; i++) {
     categorias[i].addEventListener('click', function() {
         categoriaSeleccionada = this.textContent;
+        productoActual = 0;
         cargarProductos();
     });
 }
