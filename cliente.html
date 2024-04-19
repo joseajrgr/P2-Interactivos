@@ -37,7 +37,33 @@
     </div>
     <div id="microfonoBtn">
         <img src="/img/microphone-slash.png" alt="Botón micrófono">
-    </div> 
+    </div>
+
+    <div id="chatbot-circle" onclick="toggleChatbot()">
+        <img src="https://static.vecteezy.com/system/resources/previews/004/996/790/original/robot-chatbot-icon-sign-free-vector.jpg" alt="Robot Chatbot">
+    </div>
+    
+    <div id="chatbot-popup" style="display: none;">
+    <div id="chat-messages">
+        <p id="welcome-message">¡Hola! Bienvenido a nuestra aplicación. Aquí puedes buscar información sobre productos, gestionar tu carrito, y mucho más. ¿En qué puedo ayudarte hoy?</p>
+        
+    </div>
+    <button id="clear-chat-btn" class="clear-chat-btn">Borrar Chat</button>
+    <form id="chat-form">
+        <select id="user-selection">
+            <option value="">Selecciona una opción</option>
+            <option value="hola">Hola</option>
+            <option value="productos">Productos</option>
+            <option value="carrito">Carrito</option>
+            <option value="modo de micro">Modo de Micro</option>
+            <option value="modo de una mano">Modo de Una Mano</option>
+        </select>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+    
+    
     <button id="modoUnaManoBtn"></button> <!-- Botón de Modo una mano -->
     <script src="cliente.js"></script>
 </body>

@@ -516,3 +516,88 @@ function filtrarProductos() {
         }
     }
 }
+
+//chatbot
+
+
+
+
+var isChatbotOpened = false; // Variable para rastrear si el chatbot ya ha sido abierto
+
+function toggleChatbot() {
+    var chatbotPopup = document.getElementById('chatbot-popup');
+    if (chatbotPopup.style.display === 'none') {
+        chatbotPopup.style.display = 'block';
+        if (!isChatbotOpened) {
+            
+            isChatbotOpened = true; // Marcar que el chatbot ya ha sido abierto
+        }
+    } else {
+        chatbotPopup.style.display = 'none';
+    }
+}
+
+
+
+function processUserSelection(selection) {
+    var response = '';
+
+    switch (selection) {
+        case 'hola':
+            response = '¡Hola! ¿Cómo puedo ayudarte hoy?';
+            break;
+        case 'productos':
+            response = 'Puedo ayudarte a encontrar productos. ¿Qué estás buscando?';
+            break;
+        case 'carrito':
+            response = 'Puedo ayudarte con tu carrito. ¿Quieres ver los productos en tu carrito?';
+            break;
+        case 'modo de micro':
+            response = 'El modo de micro de nuestra aplicación te permite interactuar con la aplicación usando tu voz. Para comenzar, simplemente di "añade ..." seguido del nombre del producto que quieres añadir a tu carrito. Por ejemplo, puedes decir "añade manzanas" para añadir manzanas a tu carrito. También puedes decir "elimina todo" para vaciar tu carrito o "elimina ..." seguido del nombre del producto para eliminar un producto específico. Recuerda que el reconocimiento de voz es sensible a la pronunciación, así que asegúrate de hablar claramente.';
+            break;
+        case 'modo de una mano':
+            response = 'El modo de una mano de nuestra aplicación está diseñado para facilitar el uso de la aplicación con una sola mano. Todos los controles importantes están colocados en la parte inferior de la pantalla, donde son fácilmente accesibles para el pulgar.';
+            break;
+        default:
+            response = 'Lo siento, no entendí eso. ¿Puedes intentarlo de nuevo?';
+    }
+
+    return response;
+}
+
+document.getElementById('clear-chat-btn').addEventListener('click', function() {
+    var chatMessages = document.getElementById('chat-messages');
+    var welcomeMessage = document.getElementById('welcome-message');
+    
+    var allMessages = Array.from(chatMessages.children);
+    
+    var messagesToRemove = allMessages.filter(function(element) {
+        return element !== welcomeMessage;
+    });
+    
+    messagesToRemove.forEach(function(element) {
+        chatMessages.removeChild(element);
+    });
+});
+
+
+document.getElementById('user-selection').addEventListener('change', function(event) {
+    var userSelection = event.target.value;
+
+    // Agregar el mensaje del usuario al chat
+    var userMessage = document.createElement('p');
+    userMessage.textContent = 'Usuario: ' + userSelection;
+    document.getElementById('chat-messages').appendChild(userMessage);
+
+    // Procesar la selección del usuario y generar una respuesta
+    var response = processUserSelection(userSelection);
+
+    // Agregar la respuesta del chatbot al chat
+    var botMessage = document.createElement('p');
+    botMessage.textContent = 'Chatbot: ' + response;
+    document.getElementById('chat-messages').appendChild(botMessage);
+
+    // Limpiar la selección después de enviar
+    document.getElementById('user-selection').value = '';
+    
+});

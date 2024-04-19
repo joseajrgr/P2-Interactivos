@@ -343,3 +343,90 @@ h1, h2 {
     bottom: 30px;
     right: 50px;
 }
+
+
+/*chatbot*/
+
+#chatbot-circle {
+    
+    box-shadow: 0 -2px 70px rgba(0, 0, 0, 0.1); 
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 6px solid black; 
+    background-color: #F8F9FA;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+#chatbot-circle img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%; 
+    object-fit: cover; 
+}
+
+
+#chatbot-popup {
+    position: fixed;
+    left: 10px;
+    top: 150px;
+    width: 80%;
+    height: 60%; 
+    border: 1px solid #007BFF;
+    padding: 10px;
+    overflow-y: scroll;
+    background-color: #F8F9FA;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+    z-index: 9999;
+}
+
+#chat-messages {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 33px;
+    color: #333;
+}
+
+#chat-form {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #E9ECEF;
+    border-radius: 5px;
+}
+
+#user-selection {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#chat-form button {
+    display: none; 
+}
+
+.clear-chat-btn {
+    background-color: #f44336; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 25px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
