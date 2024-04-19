@@ -74,7 +74,7 @@ for (var i = 0; i < categorias.length; i++) {
 
 function generarEstrellasAleatorias() {
     var estrellas = '';
-    var numEstrellas = Math.floor(Math.random() * 4) + 1; // Genera un número aleatorio de 1 a 4
+    var numEstrellas = Math.floor(Math.random() * 5) + 1; // Genera un número aleatorio de 1 a 4
 
     for (var i = 0; i < numEstrellas; i++) {
         estrellas += '★ '; // Añade una estrella al string

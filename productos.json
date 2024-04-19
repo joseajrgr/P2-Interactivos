@@ -3,5 +3,8 @@
     "Camiseta": {"precio": 33, "imagen": "img/camiseta.jpg", "categoria": "Moda"},
     "Lavadora": {"precio": 330, "imagen": "img/lavadora.jpg", "categoria": "Hogar"},
     "Lámpara": {"precio": 35, "imagen": "img/lampara.png", "categoria": "Hogar"},
-    "Balón de fútbol": {"precio": 12, "imagen": "img/lampara.png", "categoria": "Deporte"}
+    "Balón de fútbol": {"precio": 12, "imagen": "img/lampara.png", "categoria": "Deporte"},
+    "Bicicleta": {"precio": 300, "imagen": "img/lampara.png", "categoria": "Deporte"},
+    "IPhone": {"precio": 1000, "imagen": "img/lampara.png", "categoria": "Electrónica"},
+    "Altavoz": {"precio": 100, "imagen": "img/lampara.png", "categoria": "Electrónica"}
 }
