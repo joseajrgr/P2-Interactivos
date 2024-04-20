@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ENCARGADO</title>
+    <link rel="stylesheet" type="text/css" href="encargado.css">
+</head>
+<body>
+    <div class="header">
+        <h1>ENCARGADO</h1>
+    </div>
+    <div class="button-container">
+        <div id="deleteProductContainer" style="display: none;">
+            <select id="productSelect">
+                <!-- Las opciones se llenarán con JavaScript -->
+            </select>
+            <button id="confirmDeleteProduct">Confirmar borrado</button>
+        </div>
+        <button id="showAddProductForm">Añadir producto</button>
+        <form id="addProductForm" style="display: none;">
+            <label for="productName">Nombre del producto:</label><br>
+            <input type="text" id="productName" name="productName"><br>
+            <label for="productPrice">Precio del producto:</label><br>
+            <input type="number" id="productPrice" name="productPrice"><br>
+            <label for="productCategory">Categoría del producto:</label><br>
+            <input type="text" id="productCategory" name="productCategory"><br>
+            <label for="productImage">Imagen del producto:</label><br>
+            <input type="file" id="productImage" name="productImage" accept="image/*"><br>
+            <button id="checkData" type="button">Comprobar</button>
+            <input type="submit" value="Confirmar añadir" style="display: none;">
+        </form>
+        <button id="deleteProduct">Borrar producto</button>
+        <button id="updateProduct">Modificar producto</button>
+    </div>
+    <script src="encargado.js"></script>
+</body>
+</html>
