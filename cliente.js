@@ -1,3 +1,4 @@
+
 var listaProductos = {};
 var categoriaSeleccionada = 'Todo'; // Categoría inicial
 
@@ -348,6 +349,61 @@ document.getElementById("cerrarCarritoBtn").addEventListener("click", function()
         popupCarrito.style.display = "none";
     }, 500);
 });
+
+// Agrega estas variables al inicio del archivo
+let video = document.getElementById('video');
+let canvas = document.createElement('canvas');
+canvas.setAttribute('willReadFrequently', 'true'); // Set the attribute here
+let ctx = canvas.getContext('2d');
+let scanning = false;
+const socket = io();
+// Modifica la función pagar() de la siguiente manera
+function pagar() {
+    if (!scanning) {
+        scanning = true;
+        video.style.display = 'block';
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute('playsinline', true);
+                video.play();
+                requestAnimationFrame(scan);
+            })
+            .catch(function(err) {
+                console.error("No se pudo acceder a la cámara", err);
+                scanning = false;
+                video.style.display = 'none';
+            });
+    }
+}
+
+// Modifica la función scan() de la siguiente manera
+function scan() {
+    
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let code = jsQR(imageData.data, imageData.width, imageData.height);
+        if (code) {
+            console.log("Código QR detectado:", code.data);
+            if (code.data === 'escanearCarrito') {
+                socket.emit('carrito', carritoProductos);
+                console.log("Datos del carrito enviados al servidor");
+            }
+            scanning = false;
+            video.style.display = 'none';
+            video.srcObject.getTracks().forEach(track => track.stop());
+        } else {
+            requestAnimationFrame(scan);
+        }
+    } else {
+        requestAnimationFrame(scan);
+    }
+}
+document.getElementById("pagarBtn").addEventListener("click", pagar);
+
 // Añadir un event listener al botón de microfono
 document.getElementById("microfonoBtn").addEventListener("click", iniciarReconocimientoVoz);
 

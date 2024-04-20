@@ -37,8 +37,31 @@
             <input type="submit" value="Confirmar añadir" style="display: none;">
         </form>
         <button id="deleteProduct">Borrar producto</button>
-        <button id="updateProduct">Modificar producto</button>
+        <button id="showUpdateProductForm">Modificar producto</button>
+        <form id="updateProductForm" style="display: none;">
+            <label for="productSelectUpdate">Selecciona el producto a modificar:</label><br>
+            <select id="productSelectUpdate">
+              <!-- Las opciones se llenarán con JavaScript -->
+            </select><br>
+            <label for="productNameUpdate">Nuevo nombre del producto:</label><br>
+            <input type="text" id="productNameUpdate" name="productNameUpdate"><br>
+            <label for="productPriceUpdate">Nuevo precio del producto:</label><br>
+            <input type="number" id="productPriceUpdate" name="productPriceUpdate"><br>
+            <label for="productCategoryUpdate">Nueva categoría del producto:</label><br>
+            <input type="text" id="productCategoryUpdate" name="productCategoryUpdate"><br>
+            <label for="productImageUpdate">Nueva imagen del producto:</label><br>
+            <input type="file" id="productImageUpdate" name="productImageUpdate" accept="image/*"><br>
+            <input type="submit" value="Confirmar modificación">
+          </form>
     </div>
+    <!-- Agrega este elemento para mostrar los datos del carrito -->
+    <div id="carritoRecibido"></div>
+    <div id="qrCode"></div>
+    
+
+    <!-- Agrega estos scripts antes del cierre de la etiqueta body -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="encargado.js"></script>
 </body>
 </html>

@@ -1,3 +1,38 @@
+// Agrega esto al inicio del archivo
+const socket = io();
+
+// Agrega esta función para generar el código QR
+function generarQR() {
+  let qrCode = new QRCode(document.getElementById('qrCode'), {
+      text: 'escanearCarrito', // Cambia el texto a un identificador único
+      width: 256,
+      height: 256,
+      colorDark : "#000000",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+  });
+}
+
+// Llama a la función generarQR cuando la página se haya cargado
+window.onload = generarQR;
+
+// Agrega esta función para mostrar los datos del carrito recibido
+function mostrarCarritoRecibido(carritoData) {
+    let carritoRecibido = document.getElementById('carritoRecibido');
+    carritoRecibido.innerHTML = '';
+    for (let producto in carritoData) {
+        let item = document.createElement('p');
+        item.textContent = `${producto}: ${carritoData[producto]}`;
+        carritoRecibido.appendChild(item);
+    }
+}
+
+// Escucha el evento 'carrito' emitido por el servidor
+socket.on('carrito', function(carritoData) {
+    console.log('Datos del carrito recibidos en el cliente:', carritoData);
+    mostrarCarritoRecibido(carritoData);
+});
+
 document.getElementById('deleteProduct').addEventListener('click', function() {
     fetch('https://' + window.location.hostname + '/getProducts')
       .then(response => response.json())
@@ -92,3 +127,63 @@ document.getElementById('addProductForm').addEventListener('submit', function(ev
     });
   });
 
+document.getElementById('showUpdateProductForm').addEventListener('click', function() {
+    fetch('https://' + window.location.hostname + '/getProducts')
+        .then(response => response.json())
+        .then(products => {
+            const select = document.getElementById('productSelectUpdate');
+            // Limpia las opciones existentes
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+            // Añade las nuevas opciones
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product;
+                option.text = product;
+                select.appendChild(option);
+            });
+            // Muestra el formulario de modificación
+            document.getElementById('updateProductForm').style.display = 'block';
+        });
+});
+document.getElementById('updateProductForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const productToUpdate = document.getElementById('productSelectUpdate').value;
+  const updatedName = document.getElementById('productNameUpdate').value;
+  const updatedPrice = Number(document.getElementById('productPriceUpdate').value);
+  const updatedCategory = document.getElementById('productCategoryUpdate').value;
+  const updatedImage = document.getElementById('productImageUpdate').files[0];
+
+  const updatedProduct = {
+    nombre: updatedName,
+    precio: updatedPrice,
+    categoria: updatedCategory
+  };
+
+  const formData = new FormData();
+  formData.append('productToUpdate', productToUpdate);
+  formData.append('updatedProduct', JSON.stringify(updatedProduct));
+
+  if (updatedImage) {
+    formData.append('imagen', updatedImage);
+  }
+
+  fetch('https://' + window.location.hostname + '/updateProduct', {
+    method: 'PUT',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.message === 'Producto modificado con éxito') {
+      alert('Producto modificado con éxito');
+    } else {
+      alert('Error al modificar el producto');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Error al modificar el producto');
+  });
+});

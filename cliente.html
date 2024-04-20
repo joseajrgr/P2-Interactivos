@@ -42,6 +42,9 @@
         <h2>Carrito de compras</h2>
         <div id="costeTotal">Coste total: 0€</div>
         <ul id="carrito"></ul> 
+        <button id="pagarBtn">Pagar</button>
+        <video id="video" width="400" height="300" style="display: none;"></video>
+
     </div>
 
     <!-- Modo por voz -->
@@ -75,6 +78,8 @@
 
     <!-- Modo de una mano -->
     <button id="modoUnaManoBtn"></button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <script src="cliente.js"></script>
 </body>
 </html>

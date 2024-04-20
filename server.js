@@ -21,6 +21,13 @@ app.use(cors());
 io.on('connection', (socket) => {
   console.log('Un usuario se ha conectado');
 
+   // Escucha el evento 'carrito' enviado por el cliente
+   socket.on('carrito', (carritoData) => {
+      console.log('Datos del carrito recibidos en el servidor:', carritoData);
+      // Emite los datos del carrito a todos los clientes conectados
+      io.emit('carrito', carritoData);
+  });
+
   socket.on('update_products', (data) => {
     fs.writeFile('productos.json', JSON.stringify(data), err => {
       if(err){
@@ -128,5 +135,52 @@ app.post('/addProduct', upload.single('imagen'), (req, res) => {
     });
   });
 });
+
+app.put('/updateProduct', upload.single('imagen'), (req, res) => {
+  const productToUpdate = req.body.productToUpdate;
+  const updatedProduct = JSON.parse(req.body.updatedProduct);
+
+  fs.readFile('productos.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error al leer el archivo JSON:', err);
+      res.status(500).json({ error: 'Error al leer el archivo JSON' });
+      return;
+    }
+
+    const productos = JSON.parse(data);
+
+    if (productos.hasOwnProperty(productToUpdate)) {
+      const updatedProductName = updatedProduct.nombre || productToUpdate;
+
+      productos[updatedProductName] = {
+        precio: updatedProduct.precio || productos[productToUpdate].precio,
+        categoria: updatedProduct.categoria || productos[productToUpdate].categoria,
+        imagen: productos[productToUpdate].imagen, // Mantener la imagen existente por defecto
+      };
+
+      if (req.file) {
+        productos[updatedProductName].imagen = req.file.path;
+      }
+
+      // Eliminar el producto anterior si se cambió el nombre
+      if (updatedProductName !== productToUpdate) {
+        delete productos[productToUpdate];
+      }
+
+      fs.writeFile('productos.json', JSON.stringify(productos), 'utf8', (err) => {
+        if (err) {
+          console.error('Error al escribir en el archivo JSON:', err);
+          res.status(500).json({ error: 'Error al escribir en el archivo JSON' });
+          return;
+        }
+
+        res.json({ message: 'Producto modificado con éxito' });
+      });
+    } else {
+      res.status(404).json({ error: 'Producto no encontrado' });
+    }
+  });
+});
+
 
 server.listen(PORT, '0.0.0.0', () => console.log(`Servidor escuchando en el puerto ${PORT}`));
