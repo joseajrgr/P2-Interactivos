@@ -97,17 +97,22 @@ var costeTotal = 0;
 function actualizarCosteTotal() {
     // Inicializa el coste total a 0
     costeTotal = 0;
-
     // Recorre todos los productos en el carrito
     for (var producto in carritoProductos) {
         // Suma el coste de cada producto al coste total
         // Asegúrate de que listaProductos[producto].precio contenga el precio correcto del producto
         costeTotal += listaProductos[producto].precio * carritoProductos[producto];
     }
-
+    // Recupera el descuento del localStorage
+    var descuento = localStorage.getItem('descuento');
+    if (descuento) {
+        // Aplica el descuento al coste total
+        costeTotal -= costeTotal * parseFloat(descuento);
+    }
     // Actualiza el texto del elemento que muestra el coste total
     var divCosteTotal = document.getElementById("costeTotal");
     divCosteTotal.textContent = "Coste total: " + costeTotal.toFixed(2) + "€";
+    localStorage.removeItem('descuento');
 }
 function agregarAlCarrito(producto, cantidad = 1) {
     if (producto === undefined) {
