@@ -144,10 +144,11 @@ function agregarAlCarrito(producto, cantidad = 1) {
 }
 
 var carritoProductos = {};
-
 function actualizarCarrito() {
     var carrito = document.getElementById("carrito");
     carrito.innerHTML = ''; // Limpiar el carrito
+
+    var numeroItems = 0; // Inicializa el contador de productos
 
     for (var producto in carritoProductos) {
         var li = document.createElement("li");
@@ -190,13 +191,12 @@ function actualizarCarrito() {
         li.appendChild(btnQuitarTodos);
 
         carrito.appendChild(li);
-        var numeroItems = Object.keys(carritoProductos).reduce(function(total, producto) {
-            return total + carritoProductos[producto];
-        }, 0);
-    
-        document.getElementById("numeroItemsCarrito").textContent = numeroItems;
+        numeroItems += carritoProductos[producto]; // Suma la cantidad del producto actual al contador
     }
+
+    document.getElementById("numeroItemsCarrito").textContent = numeroItems; // Actualiza el contador de productos
 }
+
 function eliminarItemDelCarrito(producto) {
     // Verifica si el producto existe en el carrito
     if (carritoProductos.hasOwnProperty(producto)) {
@@ -576,6 +576,9 @@ function filtrarProductos() {
 //chatbot
 
 
+//chatbot
+
+
 
 
 var isChatbotOpened = false; // Variable para rastrear si el chatbot ya ha sido abierto
@@ -595,11 +598,12 @@ function toggleChatbot() {
 
 
 
+
 function processUserSelection(selection) {
     var response = '';
 
     switch (selection) {
-        case 'hola':
+        case 'Mensaje de Bienvenida':
             response = '¡Hola! ¿Cómo puedo ayudarte hoy?';
             break;
         case 'productos':
@@ -609,13 +613,25 @@ function processUserSelection(selection) {
             response = 'Puedo ayudarte con tu carrito. ¿Quieres ver los productos en tu carrito?';
             break;
         case 'modo de micro':
-            response = 'El modo de micro de nuestra aplicación te permite interactuar con la aplicación usando tu voz. Para comenzar, simplemente di "añade ..." seguido del nombre del producto que quieres añadir a tu carrito. Por ejemplo, puedes decir "añade manzanas" para añadir manzanas a tu carrito. También puedes decir "elimina todo" para vaciar tu carrito o "elimina ..." seguido del nombre del producto para eliminar un producto específico. Recuerda que el reconocimiento de voz es sensible a la pronunciación, así que asegúrate de hablar claramente.';
+            response = 'El modo de micro de nuestra aplicación te permite interactuar con la aplicación usando tu voz. Para comenzar, simplemente di "añade ..." seguido del nombre del producto que quieres añadir a tu carrito. Por ejemplo, puedes decir "añade una lámpara " para añadir la lámpara a el carrito. También puedes decir "elimina todo" para vaciar tu carrito o "elimina ..." seguido del nombre del producto para eliminar un producto específico. Recuerda que el reconocimiento de voz es sensible a la pronunciaación, así que asegúrate de hablar claramente.';
             break;
         case 'modo de una mano':
-            response = 'El modo de una mano de nuestra aplicación está diseñado para facilitar el uso de la aplicación con una sola mano. Todos los controles importantes están colocados en la parte inferior de la pantalla, donde son fácilmente accesibles para el pulgar.';
+            response = 'El modo de una mano de nuestra aplicación está diseñado para facilitar el uso de la aplicación con una sola mano. Al activar este modo, puedes cambiar entre productos utilizando la inclinación de tu dispositivo hacia adelante o hacia atrás. Además, puedes añadir el producto actual al carrito moviendo tu dispositivo hacia la derecha o quitarlo del carrito moviéndolo hacia la izquierda. Para cambiar entre productos, simplemente desliza tu dedo hacia la izquierda para el siguiente producto o hacia la derecha para el producto anterior. Este modo hace que la navegación sea más intuitiva y accesible, especialmente para usuarios que prefieren o necesitan usar la aplicación con una sola mano.';
             break;
+        case 'generarCodigoDescuento':
+            // Verifica si ya se ha generado un código de descuento
+            if (sessionStorage.getItem('codigoDescuentoGenerado')) {
+                response = 'Ya se ha generado un código de descuento. Vete a tomarr por culo.';
+            } else {
+                const codigo = generarCodigoDescuento();
+                response = `Tu código de descuento sea copiado al portapapeles. Por favor, ingrésalo en el carrito para aplicar el descuento.`;
+            }
+                break;
+        
+        
         default:
             response = 'Lo siento, no entendí eso. ¿Puedes intentarlo de nuevo?';
+            
     }
 
     return response;
@@ -656,4 +672,60 @@ document.getElementById('user-selection').addEventListener('change', function(ev
     // Limpiar la selección después de enviar
     document.getElementById('user-selection').value = '';
     
+});
+
+
+// Función para generar un código de descuento y almacenarlo
+async function generarCodigoDescuento() {
+    
+    if (sessionStorage.getItem('codigoDescuentoGenerado')) {
+        alert('Ya se ha generado un código de descuento.');
+        return;
+    }
+
+    let codigo = '';
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 8; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+
+    
+    sessionStorage.setItem(codigo, true); 
+    
+    sessionStorage.setItem('codigoDescuentoGenerado', true);
+
+    // Copiar el código al portapapeles
+    try {
+        await navigator.clipboard.writeText(codigo);
+        alert('Código de descuento copiado al portapapeles.');
+    } catch (err) {
+        console.error('Error al copiar el código de descuento al portapapeles:', err);
+    }
+
+    return codigo;
+}
+// Función para aplicar el código de descuento
+function aplicarCodigoDescuento(codigo) {
+    if (localStorage.getItem(codigo)) {
+        const descuento = 0.10; // 10% de descuento
+        // Corrección aquí: localStorage.setItem en lugar de localStoragesetItem
+        localStorage.setItem('descuento', descuento);
+        costeTotal -= (costeTotal * descuento) / 100;
+        // Elimina el código de descuento del almacenamiento local después de usarlo
+        console.log(costeTotal);
+        localStorage.removeItem(codigo);
+        
+        actualizarCosteTotal(); // Asegúrate de llamar a esta función para actualizar el coste total
+        return `¡Descuento aplicado! Ahora el coste total es ${costeTotal.toFixed(2)}€.`;
+    } else {
+        return 'Lo siento, el código de descuento no es válido.';
+    }
+}
+
+
+document.getElementById('aplicarCodigoBtn').addEventListener('click', function() {
+    var codigoDescuento = document.getElementById("codigoDescuentoInput").value.trim();
+    var response = aplicarCodigoDescuento(codigoDescuento);
+    document.getElementById("codigoDescuentoInput").value = ''; 
+    alert(response); 
 });
