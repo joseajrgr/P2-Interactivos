@@ -1,70 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
+    <meta charset="UTF-8">
+    <title>Tienda de productos</title>
     <link rel="stylesheet" type="text/css" href="cliente.css">
 </head>
+
 <body>
+    <!-- Header -->
     <header>
         <h1>Tienda de Productos</h1>
     </header>
 
+    <!-- Barra de busqueda -->
     <input id="productoInput" type="text" placeholder="¿Qué quieres comprar?" oninput="filtrarProductos()">
     <button id="agregarBtn" onclick="agregarAlCarrito()">+</button>
-    <!-- Sección de categorías -->
+
+    <!-- Barra de categorías -->
     <div class="categorias">
         <div class="categoria">Todo</div>
         <div class="categoria">Hogar</div>
         <div class="categoria">Moda</div>
         <div class="categoria">Deporte</div>
         <div class="categoria">Electrónica</div>
-        <div class="categoria">Categoría 5</div>
-        <div class="categoria">Categoría 5</div>
-        
-        
+        <div class="categoria">Categoría 5</div>                
     </div>
+
+    <!-- Lista de productos -->
     <ul id="listaProductos"></ul>
+
+    <!-- Mostar carrito -->
     <button id="mostrarCarritoBtn">
         <img src="img/carrito.png" alt="Carrito">
     <span id="numeroItemsCarrito">0</span>
     </button>
+
+    <!-- Carrito -->
     <div id="popupCarrito">    
         <button id="cerrarCarritoBtn">x</button>
-
         <h2>Carrito de compras</h2>
         <div id="costeTotal">Coste total: 0€</div>
         <ul id="carrito"></ul> 
-
     </div>
+
+    <!-- Modo por voz -->
     <div id="microfonoBtn">
         <img src="/img/microphone-slash.png" alt="Botón micrófono">
     </div>
 
+     <!-- Chatbot -->
     <div id="chatbot-circle" onclick="toggleChatbot()">
         <img src="https://static.vecteezy.com/system/resources/previews/004/996/790/original/robot-chatbot-icon-sign-free-vector.jpg" alt="Robot Chatbot">
     </div>
     
     <div id="chatbot-popup" style="display: none;">
-    <div id="chat-messages">
-        <p id="welcome-message">¡Hola! Bienvenido a nuestra aplicación. Aquí puedes buscar información sobre productos, gestionar tu carrito, y mucho más. ¿En qué puedo ayudarte hoy?</p>
-        
-    </div>
-    <button id="clear-chat-btn" class="clear-chat-btn">Borrar Chat</button>
-    <form id="chat-form">
-        <select id="user-selection">
-            <option value="">Selecciona una opción</option>
-            <option value="hola">Hola</option>
-            <option value="productos">Productos</option>
-            <option value="carrito">Carrito</option>
-            <option value="modo de micro">Modo de Micro</option>
-            <option value="modo de una mano">Modo de Una Mano</option>
-        </select>
-        <button type="submit">Enviar</button>
-    </form>
-</div>
+        <div id="chat-messages">
+            <p id="welcome-message">¡Hola! Bienvenido a nuestra aplicación. Aquí puedes buscar información sobre productos, gestionar tu carrito, y mucho más. ¿En qué puedo ayudarte hoy?</p>
+        </div>
 
-    
-    
-    <button id="modoUnaManoBtn"></button> <!-- Botón de Modo una mano -->
+        <button id="clear-chat-btn" class="clear-chat-btn">Borrar Chat</button>
+        <form id="chat-form">
+            <select id="user-selection">
+                <option value="">Selecciona una opción</option>
+                <option value="hola">Hola</option>
+                <option value="productos">Productos</option>
+                <option value="carrito">Carrito</option>
+                <option value="modo de micro">Modo de Micro</option>
+                <option value="modo de una mano">Modo de Una Mano</option>
+            </select>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <!-- Modo de una mano -->
+    <button id="modoUnaManoBtn"></button>
     <script src="cliente.js"></script>
 </body>
 </html>

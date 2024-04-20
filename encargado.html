@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+    
 <head>
-    <title>ENCARGADO</title>
+    <meta charset="UTF-8">
+    <title>Encargado</title>
     <link rel="stylesheet" type="text/css" href="encargado.css">
 </head>
+
 <body>
-    <div class="header">
+    <!-- Header -->
+    <header>
         <h1>ENCARGADO</h1>
-    </div>
+    </header>
+
+    <!-- Contenedor para los botones -->
     <div class="button-container">
         <div id="deleteProductContainer" style="display: none;">
             <select id="productSelect">
@@ -15,6 +21,8 @@
             </select>
             <button id="confirmDeleteProduct">Confirmar borrado</button>
         </div>
+
+        <!-- Botón para añadir producto -->
         <button id="showAddProductForm">Añadir producto</button>
         <form id="addProductForm" style="display: none;">
             <label for="productName">Nombre del producto:</label><br>

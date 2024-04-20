@@ -8,7 +8,7 @@ body {
 header {
     background-color: #257;
     color: white;
-    padding: 15px 0;
+    padding: 50px 0;
     text-align: center;
     bottom: 20px;
 }
@@ -207,11 +207,11 @@ h1, h2 {
 /* Estilos para los botones del carrito */
 .carrito-btn {
     border: none;
-    padding: 10px 15px; /* Aumenta el padding para hacerlos más grandes */
+    padding: 10px 15px;
     margin: 0 5px;
     cursor: pointer;
-    font-size: 18px; /* Aumenta el tamaño de fuente para hacerlos más grandes */
-    border-radius: 50%; /* Hace los botones redondos */
+    font-size: 18px;
+    border-radius: 50%; /* Hace el botón redondo */
 }
 
 .carrito-btn-minus, .carrito-btn-plus {
@@ -254,10 +254,10 @@ h1, h2 {
 
 #mostrarCarritoBtn {
     position: fixed;
-    width: 90px;
-    height: 90px;
-    top: 20px;
-    right: 20px;
+    width: 110px;
+    height: 110px;
+    top: 50px;
+    right: 30px;
     z-index: 100;
     cursor: pointer;
     border-radius: 50%;
@@ -297,62 +297,12 @@ h1, h2 {
     font-size: 30px;
 }
 
-/* Estilos para el modo de una sola mano */
-.modo-una-mano .lista-productos li {
-    text-align: center;
-}
-
-.modo-una-mano .producto-texto {
-    position: relative;
-    text-align: center;
-    margin-top: 20px;
-    left: 0;
-    font-size: 50px;
-}
-
-.modo-una-mano .producto-imagen {
-    position: static;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.modo-una-mano .producto-imagen img {
-    max-width: 80%;
-    max-height: 500px;
-    width: 500px;
-    object-fit: contain;
-}
-
-.modo-una-mano .producto-estrellas {
-    position: unset;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.modo-una-mano .producto-boton{
-    position: static;
-    text-align: center;
-    margin-top: 20px;
-}
-.modo-una-mano .producto-boton button{
-    font-size: 50px;
-}
-
-.modo-una-mano #mostrarCarritoBtn {
-    top: unset;
-    bottom: 30px;
-    right: 50px;
-}
-
-
-/*chatbot*/
-
-#chatbot-circle {
-    
+/* Chatbot */
+#chatbot-circle { 
     box-shadow: 0 -2px 70px rgba(0, 0, 0, 0.1); 
     position: fixed;
-    left: 10px;
-    top: 10px;
+    left: 30px;
+    top: 45px;
     width: 110px;
     height: 110px;
     border-radius: 50%;
@@ -429,4 +379,57 @@ h1, h2 {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
+}
+
+/* Estilos para el modo de una sola mano */
+.modo-una-mano .lista-productos li {
+    text-align: center;
+}
+
+.modo-una-mano .producto-texto {
+    position: relative;
+    text-align: center;
+    margin-top: 20px;
+    left: 0;
+    font-size: 50px;
+}
+
+.modo-una-mano .producto-imagen {
+    position: static;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.modo-una-mano .producto-imagen img {
+    max-width: 80%;
+    max-height: 500px;
+    width: 500px;
+    object-fit: contain;
+}
+
+.modo-una-mano .producto-estrellas {
+    position: unset;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.modo-una-mano .producto-boton{
+    position: static;
+    text-align: center;
+    margin-top: 20px;
+}
+.modo-una-mano .producto-boton button{
+    font-size: 50px;
+}
+
+.modo-una-mano #mostrarCarritoBtn {
+    top: unset;
+    bottom: 30px;
+    right: 50px;
+}
+
+.modo-una-mano #chatbot-circle {
+    top: unset;
+    bottom: 30px;
+    left: 50px;
 }
