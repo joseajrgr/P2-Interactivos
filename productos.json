@@ -10,5 +10,10 @@
     "Pesas": {"precio": 35, "imagen": "img/pesas.jpg", "categoria": "Deporte"},
     "IPhone": {"precio": 1000, "imagen": "img/iphone.jpeg", "categoria": "Electrónica"},
     "Altavoz": {"precio": 100, "imagen": "img/altavoz.png", "categoria": "Electrónica"},
-    "Película": {"precio": 35, "imagen": "img/pelicula.jpg", "categoria": "Ocio"}
+    "Película": {"precio": 35, "imagen": "img/pelicula.jpg", "categoria": "Ocio"},
+    "Videojuego": {"precio": 50, "imagen": "img/juego.png", "categoria": "Ocio"},
+    "Comic": {"precio": 15, "imagen": "img/comic.jpg", "categoria": "Ocio"},
+    "Raqueta": {"precio": 30, "imagen": "img/raqueta.jpg", "categoria": "Deporte"},
+    "Ajedrez": {"precio": 20, "imagen": "img/ajedrez.jpg", "categoria": "Ocio"},
+    "Ordenador": {"precio": 800, "imagen": "img/ordenador.jpg", "categoria": "Electrónica"}
 }
