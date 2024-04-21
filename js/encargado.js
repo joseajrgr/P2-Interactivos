@@ -1,5 +1,6 @@
 const socket = io();
 
+// Función para generar el código QR
 function generarQR() {
   let qrCode = new QRCode(document.getElementById('qrCode'), {
       text: 'escanearCarrito',
@@ -25,7 +26,7 @@ function mostrarCarritoRecibido(carritoData) {
   }
 }
 
-// Escucha el evento 'carrito' emitido por el servidor
+// Escucha el evento 'carrito' y llama a la función mostrarCarritoRecibido
 socket.on('carrito', function(carritoData) {
   console.log('Datos del carrito recibidos en el cliente:', carritoData);
   mostrarCarritoRecibido(carritoData);

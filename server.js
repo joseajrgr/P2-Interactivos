@@ -50,6 +50,7 @@ io.on('connection', (socket) => {
   });
 });
 
+// Función para obtener los productos
 app.delete('/deleteProduct', (req, res) => {
   const productToDelete = req.body.product;
 
@@ -81,6 +82,7 @@ app.delete('/deleteProduct', (req, res) => {
   });
 });
 
+// Función para obtener los productos
 app.get('/getProducts', (req, res) => {
   fs.readFile('productos.json', (err, data) => {
     if (err) {
@@ -106,6 +108,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Función para añadir un producto
 app.post('/addProduct', upload.single('imagen'), (req, res) => {
   const productToAdd = req.body;
   productToAdd.imagen = path.join('img', req.file.filename);  // Guarda la ruta de la imagen
@@ -142,6 +145,7 @@ app.post('/addProduct', upload.single('imagen'), (req, res) => {
   });
 });
 
+// Función para actualizar un producto
 app.put('/updateProduct', upload.single('imagen'), (req, res) => {
   const productToUpdate = req.body.productToUpdate;
   const updatedProduct = JSON.parse(req.body.updatedProduct);
