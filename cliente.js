@@ -114,6 +114,7 @@ function actualizarCosteTotal() {
     divCosteTotal.textContent = "Coste total: " + costeTotal.toFixed(2) + "€";
     localStorage.removeItem('descuento');
 }
+
 function agregarAlCarrito(producto, cantidad = 1) {
     if (producto === undefined) {
         var productoInput = document.getElementById("productoInput");
@@ -347,6 +348,7 @@ function iniciarReconocimientoVoz() {
         alert('Tu navegador no soporta reconocimiento de voz.');
     }
 }
+
 document.getElementById("mostrarCarritoBtn").addEventListener("click", function() {
     var carrito = document.getElementById("popupCarrito");
     
@@ -355,7 +357,6 @@ document.getElementById("mostrarCarritoBtn").addEventListener("click", function(
     setTimeout(function() {
         carrito.style.bottom = "0"; // Ajusta la posición para que el carrito aparezca desde la parte inferior
     }, 10); // Ajusta el tiempo de espera según sea necesario
-    
 });
 document.getElementById("cerrarCarritoBtn").addEventListener("click", function() {
     var popupCarrito = document.getElementById("popupCarrito");
@@ -365,14 +366,14 @@ document.getElementById("cerrarCarritoBtn").addEventListener("click", function()
     }, 500);
 });
 
-// Agrega estas variables al inicio del archivo
 let video = document.getElementById('video');
 let canvas = document.createElement('canvas');
-canvas.setAttribute('willReadFrequently', 'true'); // Set the attribute here
+canvas.setAttribute('willReadFrequently', 'true');
 let ctx = canvas.getContext('2d');
 let scanning = false;
 const socket = io();
-// Modifica la función pagar() de la siguiente manera
+
+// Función para pagar la compra
 function pagar() {
     if (!scanning) {
         scanning = true;

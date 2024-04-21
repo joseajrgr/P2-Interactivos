@@ -6,16 +6,22 @@
     <title>Registro</title>
     <link rel="stylesheet" href="registro.css">
 </head>
+
 <body>
     <h1>Tienda de productos</h1>
+
+    <!-- Contenedor blanco -->
     <div class="container">
         <h2>REGISTRO</h2>
+        <!-- Tipo de usuario -->
         <label for="tipoUsuario">Selecciona tu tipo de usuario:</label>
         <select id="tipoUsuario">
             <option value="cliente">Cliente</option>
             <option value="encargado">Encargado</option>
         </select>
+        <!-- Nombre de usuario -->
         <input type="text" id="nombreUsuario" placeholder="Nombre de usuario">
+        <!-- Contraseña -->
         <input type="password" id="contraseña" placeholder="Contraseña">
         <button onclick="registrarUsuario()">Registrarse</button>
     </div>

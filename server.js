@@ -6,6 +6,7 @@ const socketIO = require('socket.io');
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
+
 // Definimos el puerto en el que escuchará nuestro servidor
 const PORT = 80;
 
@@ -13,8 +14,13 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
+// Sirve todos los archivos estáticos del directorio actual y los especificados
 app.use(bodyParser.json());
-app.use(express.static(__dirname)); // Sirve todos los archivos estáticos desde el directorio actual
+app.use(express.static(__dirname)); 
+app.use(express.static(path.join(__dirname, 'html'))); 
+app.use(express.static(path.join(__dirname, 'css'))); 
+app.use(express.static(path.join(__dirname, 'js'))); 
+
 // Permite solicitudes CORS desde cualquier origen
 app.use(cors());
 

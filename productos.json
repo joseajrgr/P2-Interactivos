@@ -1,10 +1,14 @@
 {
-    "Deportivas Kike": {"precio": 80, "imagen": "img/zapatillas.jpg", "categoria": "Moda"},
     "Camiseta": {"precio": 33, "imagen": "img/camiseta.jpg", "categoria": "Moda"},
+    "Pantalón": {"precio": 39, "imagen": "img/pantalon.png", "categoria": "Moda"},
+    "Deportivas Kike": {"precio": 80, "imagen": "img/zapatillas.jpg", "categoria": "Moda"},
     "Lavadora": {"precio": 330, "imagen": "img/lavadora.jpg", "categoria": "Hogar"},
+    "Mesa": {"precio": 260, "imagen": "img/mesa.png", "categoria": "Hogar"},
     "Lámpara": {"precio": 35, "imagen": "img/lampara.png", "categoria": "Hogar"},
+    "Bicicleta": {"precio": 230, "imagen": "img/bicicleta.png", "categoria": "Deporte"},
     "Balón de fútbol": {"precio": 12, "imagen": "img/lampara.png", "categoria": "Deporte"},
-    "Bicicleta": {"precio": 300, "imagen": "img/lampara.png", "categoria": "Deporte"},
+    "Pesas": {"precio": 35, "imagen": "img/lampara.png", "categoria": "Deporte"},
     "IPhone": {"precio": 1000, "imagen": "img/lampara.png", "categoria": "Electrónica"},
-    "Altavoz": {"precio": 100, "imagen": "img/lampara.png", "categoria": "Electrónica"}
+    "Altavoz": {"precio": 100, "imagen": "img/lampara.png", "categoria": "Electrónica"},
+    "Película": {"precio": 35, "imagen": "img/lampara.png", "categoria": "Ocio"}
 }
