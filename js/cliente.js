@@ -28,11 +28,13 @@ var modoUnaMano = false; // Añade esta línea para declarar la variable
 var isChatbotOpened = false;
 
 /* -------------------------------------- FUNCIONES -------------------------------- */
+// Cargar los productos del archivo JSON
 fetch('productos.json')
     .then(response => response.json())
     .then(data => listaProductos = data)
     .catch(error => console.error('Error:', error));
 
+// Función para cargar los productos en la lista
 function cargarProductos() {
     var lista = document.getElementById('listaProductos');
     lista.innerHTML = ''; // Limpiar la lista
@@ -98,6 +100,7 @@ for (var i = 0; i < categorias.length; i++) {
     });
 }
 
+// Función para generar estrellas aleatorias
 function generarEstrellasAleatorias() {
     var estrellas = '';
     var numEstrellas = Math.floor(Math.random() * 5) + 1; // Genera un número aleatorio de 1 a 5
@@ -108,6 +111,7 @@ function generarEstrellasAleatorias() {
 
     return estrellas;
 }
+
 // Llamar a la función después de cargar los productos
 fetch('productos.json')
     .then(response => response.json())
@@ -119,6 +123,7 @@ fetch('productos.json')
     
         
 /* -------------------------------------- FUNCIONES DE COSTE Y CARRITO -------------------------------- */
+// Función para actualizar el coste total
 function actualizarCosteTotal() {
     // Inicializa el coste total a 0
     costeTotal = 0;
@@ -139,12 +144,15 @@ function actualizarCosteTotal() {
     localStorage.removeItem('descuento');
 }
 
+// Función para agregar un producto al carrito
 function agregarAlCarrito(producto, cantidad = 1) {
+    // Verifica si el producto está en la lista de productos
     if (producto === undefined) {
         var productoInput = document.getElementById("productoInput");
         var producto = productoInput.value.trim();
         productoInput.value = "";
     } else {
+        // Verifica si la cantidad está incluida en el nombre del producto
         var parts = producto.split(' ');
         if (parts.length > 1 && !isNaN(parts[0])) {
             cantidad = parseInt(parts[0]);
@@ -157,6 +165,7 @@ function agregarAlCarrito(producto, cantidad = 1) {
 
     console.log('Intentando agregar al carrito: ' + producto);
 
+    // Verifica si el producto está en la lista de productos
     var productoEnMinusculas = producto.toLowerCase();
     var productoEnLista = Object.keys(listaProductos).find(key => key.toLowerCase() === productoEnMinusculas || key.toLowerCase() + 's' === productoEnMinusculas);
     if (producto !== "" && productoEnLista) {
@@ -173,6 +182,7 @@ function agregarAlCarrito(producto, cantidad = 1) {
     }
 }
 
+// Función para actualizar el carrito
 function actualizarCarrito() {
     var carrito = document.getElementById("carrito");
     carrito.innerHTML = ''; // Limpiar el carrito
@@ -233,6 +243,7 @@ function actualizarCarrito() {
     }
 }
 
+// Función para eliminar un producto del carrito por completo
 function eliminarItemDelCarrito(producto) {
     // Verifica si el producto existe en el carrito
     if (carritoProductos.hasOwnProperty(producto)) {
@@ -247,6 +258,7 @@ function eliminarItemDelCarrito(producto) {
     }
 }
 
+// Función para eliminar un producto del carrito
 function eliminarDelCarrito(producto) {
     var productoEnMinusculas = producto.toLowerCase();
     var productoEnLista = Object.keys(listaProductos).find(key => key.toLowerCase() === productoEnMinusculas || key.toLowerCase() + 's' === productoEnMinusculas);
@@ -270,6 +282,7 @@ function eliminarDelCarrito(producto) {
     }
 }
 
+// Función para eliminar todos los productos del carrito
 function eliminarTodoDelCarrito() {
     console.log('Eliminando todos los productos del carrito...');
     var carrito = document.getElementById("carrito");
@@ -291,6 +304,7 @@ document.getElementById("mostrarCarritoBtn").addEventListener("click", function(
         carrito.style.bottom = "0"; // Ajusta la posición para que el carrito aparezca desde la parte inferior
     }, 10);
 });
+
 document.getElementById("cerrarCarritoBtn").addEventListener("click", function() {
     var popupCarrito = document.getElementById("popupCarrito");
     popupCarrito.style.bottom = "-100%";
@@ -326,7 +340,8 @@ document.getElementById('closeVideoBtn').addEventListener('click', function() {
     video.currentTime = 0;
     scanning = false;
 });
-// Modifica la función scan() de la siguiente manera
+
+// Función para escanear el código QR
 function scan() { 
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
         canvas.width = video.videoWidth;
@@ -354,8 +369,9 @@ function scan() {
 }
 document.getElementById("pagarBtn").addEventListener("click", pagar);
 
-/* -------------------------------------- FUNCIONES DE RECONOCIMIENTO POR VOZ -------------------------------- */
 
+/* -------------------------------------- FUNCIONES DE RECONOCIMIENTO POR VOZ -------------------------------- */
+// Función para convertir un número en palabras a un número
 function convertirNumeroPalabraANumero(palabra) {
     switch (palabra) {
         case 'una': return 1;
@@ -403,7 +419,8 @@ function iniciarReconocimientoVoz() {
             var speechResult = event.results[0][0].transcript;
             
             mostrarNotificacion('Resultado de reconocimiento de voz: ' + speechResult);
-        
+
+            // Verificar si el resultado del reconocimiento de voz contiene ciertas palabras clave
             if (speechResult.toLowerCase().startsWith('añade')) {
                 var parts = speechResult.slice(6).split(' ');
                 var cantidad = convertirNumeroPalabraANumero(parts[0]);
@@ -426,7 +443,7 @@ function iniciarReconocimientoVoz() {
 
         recognition.start();
     } else {
-        alert('Tu navegador no soporta reconocimiento de voz.');
+        mostrarNotificacion('Tu navegador no soporta reconocimiento de voz.');
     }
 }
 
@@ -435,6 +452,7 @@ document.getElementById("microfonoBtn").addEventListener("click", iniciarReconoc
 
 
 /* -------------------------------------- FUNCIONES DEL MODO UNA MANO -------------------------------- */
+// Función para mostrar el producto actual
 function mostrarProductoActual() {
     var lista = document.getElementById('listaProductos');
     var productos = lista.getElementsByTagName('li');
@@ -448,6 +466,7 @@ function mostrarProductoActual() {
     }
 }
 
+// Función para manejar la orientación del dispositivo
 function handleOrientation(event) {
     if (modoUnaMano) {
         var orientacion = event.gamma;
@@ -498,7 +517,7 @@ window.addEventListener('deviceorientation', function(event) {
     handleOrientation(event);
 });
 
-
+// Función para manejar el gesto de deslizamiento
 function handleGesture() {
     var lista = document.getElementById('listaProductos');
     if (touchendX < touchstartX) {
@@ -528,7 +547,7 @@ document.getElementById('listaProductos').addEventListener('touchend', function(
     }
 }, false);
 
-// Añade un controlador de eventos al botón de modo una mano
+//  Controlador de eventos al botón de modo una mano
 document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
     modoUnaMano = !modoUnaMano;
     var lista = document.getElementById('listaProductos');
@@ -572,6 +591,7 @@ document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
 });
 
 /* -------------------------------------- FUNCIONES DE BÚSQUEDA -------------------------------- */
+// Función para filtrar productos
 function filtrarProductos() {
     var input = document.getElementById('productoInput');
     var filtro = input.value.toLowerCase();
@@ -591,7 +611,7 @@ function filtrarProductos() {
 }
 
 /* -------------------------------------- FUNCIONES DEL CHATBOT -------------------------------- */ 
-
+// Función para mostrar el chatbot
 function toggleChatbot() {
     var chatbotPopup = document.getElementById('chatbot-popup');
     if (chatbotPopup.classList.contains('hide')) {
@@ -610,6 +630,7 @@ function toggleChatbot() {
     }
 }
 
+// Añadir un event listener al botón de chatbot
 function processUserSelection(selection) {
     var response = '';
 
@@ -641,6 +662,7 @@ function processUserSelection(selection) {
     return response;
 }
 
+// Añadir un event listener al botón de chatbot
 document.getElementById('clear-chat-btn').addEventListener('click', function() {
     var chatMessages = document.getElementById('chat-messages');
     var welcomeMessage = document.getElementById('welcome-message');
@@ -733,6 +755,7 @@ document.getElementById('aplicarCodigoBtn').addEventListener('click', function()
 });
 
 /* -------------------------------------- FUNCIONES DE NOTIFICACIÓN -------------------------------- */
+// Función para mostrar una notificación
 function mostrarNotificacion(mensaje) {
     // Crear el elemento de notificación
     var notificacion = document.createElement('div');
