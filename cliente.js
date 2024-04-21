@@ -265,14 +265,17 @@ function eliminarDelCarrito(producto) {
 }
 
 function eliminarTodoDelCarrito() {
+    console.log('Eliminando todos los productos del carrito...');
     var carrito = document.getElementById("carrito");
     while (carrito.firstChild) {
         carrito.removeChild(carrito.firstChild);
     }
-
+    // Vacía el objeto carritoProductos
+    carritoProductos = {};
     actualizarCarrito();
     actualizarCosteTotal();
 }
+
 function convertirNumeroPalabraANumero(palabra) {
     switch (palabra) {
         case 'una': return 1;
@@ -403,6 +406,7 @@ function scan() {
             if (code.data === 'escanearCarrito') {
                 socket.emit('carrito', carritoProductos);
                 console.log("Datos del carrito enviados al servidor");
+                eliminarTodoDelCarrito();
             }
             scanning = false;
             video.style.display = 'none';
@@ -735,3 +739,4 @@ document.getElementById('aplicarCodigoBtn').addEventListener('click', function()
     document.getElementById("codigoDescuentoInput").value = ''; 
     alert(response); 
 });
+

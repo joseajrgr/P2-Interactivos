@@ -34,25 +34,42 @@ socket.on('carrito', function(carritoData) {
 });
 
 document.getElementById('deleteProduct').addEventListener('click', function() {
-    fetch('https://' + window.location.hostname + '/getProducts')
-      .then(response => response.json())
-      .then(products => {
-        const select = document.getElementById('productSelect');
-        // Primero, limpia las opciones existentes
-        while (select.firstChild) {
-          select.removeChild(select.firstChild);
-        }
-        // Luego, añade las nuevas opciones
-        products.forEach(product => {
-          const option = document.createElement('option');
-          option.value = product;
-          option.text = product;
-          select.appendChild(option);
-        });
-        // Finalmente, muestra el desplegable y el botón de confirmación
-        document.getElementById('deleteProductContainer').style.display = 'block';
+  // Oculta los otros botones
+  document.getElementById('showAddProductForm').style.display = 'none';
+  document.getElementById('showUpdateProductForm').style.display = 'none';
+
+  // Muestra el botón de cancelar
+  document.getElementById('cancelDeleteProduct').style.display = 'block';
+
+  fetch('https://' + window.location.hostname + '/getProducts')
+    .then(response => response.json())
+    .then(products => {
+      const select = document.getElementById('productSelect');
+      // Primero, limpia las opciones existentes
+      while (select.firstChild) {
+        select.removeChild(select.firstChild);
+      }
+      // Luego, añade las nuevas opciones
+      products.forEach(product => {
+        const option = document.createElement('option');
+        option.value = product;
+        option.text = product;
+        select.appendChild(option);
       });
-  });
+      // Finalmente, muestra el desplegable y el botón de confirmación
+      document.getElementById('deleteProductContainer').style.display = 'block';
+    });
+});
+
+document.getElementById('cancelDeleteProduct').addEventListener('click', function() {
+  // Oculta el botón de cancelar y el contenedor de borrar producto
+  document.getElementById('cancelDeleteProduct').style.display = 'none';
+  document.getElementById('deleteProductContainer').style.display = 'none';
+
+  // Muestra los otros botones
+  document.getElementById('showAddProductForm').style.display = 'block';
+  document.getElementById('showUpdateProductForm').style.display = 'block';
+});
 
   document.getElementById('confirmDeleteProduct').addEventListener('click', function() {
     const select = document.getElementById('productSelect');
@@ -71,16 +88,43 @@ document.getElementById('deleteProduct').addEventListener('click', function() {
             alert('Producto borrado con éxito');
             // Oculta el desplegable y el botón de confirmación
             document.getElementById('deleteProductContainer').style.display = 'none';
+            // Oculta el botón de cancelar y el formulario de borrar producto
+            document.getElementById('cancelDeleteProduct').style.display = 'none';
+            //document.getElementById('deleteProductForm').style.display = 'none';
+
+            // Muestra los otros botones
+            document.getElementById('showAddProductForm').style.display = 'block';
+            document.getElementById('showUpdateProductForm').style.display = 'block';
       } else {
         alert('Error al borrar el producto');
       }
     });
   });
 
-document.getElementById('showAddProductForm').addEventListener('click', function() {
+  document.getElementById('showAddProductForm').addEventListener('click', function() {
+    // Oculta los otros botones
+    document.getElementById('deleteProduct').style.display = 'none';
+    document.getElementById('showUpdateProductForm').style.display = 'none';
+
+    // Muestra el botón de cancelar
+    document.getElementById('cancelAddProduct').style.display = 'block';
+
+    // Muestra el formulario de añadir producto
     document.getElementById('addProductForm').style.display = 'block';
-    this.style.display = 'none';
 });
+
+document.getElementById('cancelAddProduct').addEventListener('click', function(event) {
+  event.preventDefault();  // Evita que el formulario se envíe de la forma predeterminada
+
+  // Oculta el botón de cancelar y el formulario de añadir producto
+  document.getElementById('cancelAddProduct').style.display = 'none';
+  document.getElementById('addProductForm').style.display = 'none';
+
+  // Muestra los otros botones
+  document.getElementById('deleteProduct').style.display = 'block';
+  document.getElementById('showUpdateProductForm').style.display = 'block';
+});
+
 
 document.getElementById('checkData').addEventListener('click', function() {
     const productName = document.getElementById('productName').value;
@@ -121,13 +165,26 @@ document.getElementById('addProductForm').addEventListener('submit', function(ev
     .then(data => {
       if (data.message === 'Producto añadido con éxito') {
         alert('Producto añadido con éxito');
+        // Oculta el botón de cancelar y el formulario de añadir producto
+        document.getElementById('cancelAddProduct').style.display = 'none';
+        document.getElementById('addProductForm').style.display = 'none';
+
+        // Muestra los otros botones
+        document.getElementById('deleteProduct').style.display = 'block';
+        document.getElementById('showUpdateProductForm').style.display = 'block';
       } else {
         alert('Error al añadir el producto');
       }
     });
   });
 
-document.getElementById('showUpdateProductForm').addEventListener('click', function() {
+  document.getElementById('showUpdateProductForm').addEventListener('click', function() {
+    // Oculta los otros botones
+    document.getElementById('deleteProduct').style.display = 'none';
+    document.getElementById('showAddProductForm').style.display = 'none';
+
+    // Muestra el botón de cancelar
+    document.getElementById('cancelUpdateProduct').style.display = 'block';
     fetch('https://' + window.location.hostname + '/getProducts')
         .then(response => response.json())
         .then(products => {
@@ -146,6 +203,17 @@ document.getElementById('showUpdateProductForm').addEventListener('click', funct
             // Muestra el formulario de modificación
             document.getElementById('updateProductForm').style.display = 'block';
         });
+});
+document.getElementById('cancelUpdateProduct').addEventListener('click', function(event) {
+  event.preventDefault();  // Evita que el formulario se envíe de la forma predeterminada
+
+  // Oculta el botón de cancelar y el formulario de actualizar producto
+  document.getElementById('cancelUpdateProduct').style.display = 'none';
+  document.getElementById('updateProductForm').style.display = 'none';
+
+  // Muestra los otros botones
+  document.getElementById('deleteProduct').style.display = 'block';
+  document.getElementById('showAddProductForm').style.display = 'block';
 });
 document.getElementById('updateProductForm').addEventListener('submit', function(event) {
   event.preventDefault();
@@ -178,6 +246,13 @@ document.getElementById('updateProductForm').addEventListener('submit', function
   .then(data => {
     if (data.message === 'Producto modificado con éxito') {
       alert('Producto modificado con éxito');
+      // Oculta el botón de cancelar y el formulario de actualizar producto
+      document.getElementById('cancelUpdateProduct').style.display = 'none';
+      document.getElementById('updateProductForm').style.display = 'none';
+
+      // Muestra los otros botones
+      document.getElementById('deleteProduct').style.display = 'block';
+      document.getElementById('showAddProductForm').style.display = 'block';
     } else {
       alert('Error al modificar el producto');
     }

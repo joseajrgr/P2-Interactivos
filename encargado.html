@@ -15,12 +15,6 @@
 
     <!-- Contenedor para los botones -->
     <div class="button-container">
-        <div id="deleteProductContainer" style="display: none;">
-            <select id="productSelect">
-                <!-- Las opciones se llenarán con JavaScript -->
-            </select>
-            <button id="confirmDeleteProduct">Confirmar borrado</button>
-        </div>
 
         <!-- Botón para añadir producto -->
         <button id="showAddProductForm">Añadir producto</button>
@@ -35,8 +29,16 @@
             <input type="file" id="productImage" name="productImage" accept="image/*"><br>
             <button id="checkData" type="button">Comprobar</button>
             <input type="submit" value="Confirmar añadir" style="display: none;">
+            <button id="cancelAddProduct" type="button" style="display: none;">Cancelar</button>
         </form>
         <button id="deleteProduct">Borrar producto</button>
+        <div id="deleteProductContainer" style="display: none;">
+            <select id="productSelect">
+                <!-- Las opciones se llenarán con JavaScript -->
+            </select>
+            <button id="confirmDeleteProduct">Confirmar borrado</button>
+            <button id="cancelDeleteProduct" style="display: none;">Cancelar</button>
+        </div>
         <button id="showUpdateProductForm">Modificar producto</button>
         <form id="updateProductForm" style="display: none;">
             <label for="productSelectUpdate">Selecciona el producto a modificar:</label><br>
@@ -52,6 +54,7 @@
             <label for="productImageUpdate">Nueva imagen del producto:</label><br>
             <input type="file" id="productImageUpdate" name="productImageUpdate" accept="image/*"><br>
             <input type="submit" value="Confirmar modificación">
+            <button id="cancelUpdateProduct" style="display: none;">Cancelar</button>
           </form>
     </div>
     <!-- Agrega este elemento para mostrar los datos del carrito -->
