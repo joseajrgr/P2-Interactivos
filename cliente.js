@@ -592,60 +592,57 @@ function filtrarProductos() {
 //chatbot
 
 
-//chatbot
 
-
-
-
-var isChatbotOpened = false; // Variable para rastrear si el chatbot ya ha sido abierto
+var isChatbotOpened = false; 
 
 function toggleChatbot() {
     var chatbotPopup = document.getElementById('chatbot-popup');
-    if (chatbotPopup.style.display === 'none') {
+    if (chatbotPopup.classList.contains('hide')) {
+        chatbotPopup.classList.remove('hide');
         chatbotPopup.style.display = 'block';
         if (!isChatbotOpened) {
-            
-            isChatbotOpened = true; // Marcar que el chatbot ya ha sido abierto
+            isChatbotOpened = true; 
         }
     } else {
-        chatbotPopup.style.display = 'none';
+        
+        chatbotPopup.classList.add('hide');
+        
+        setTimeout(function() {
+            chatbotPopup.style.display = 'none';
+        }, 500); 
     }
 }
-
-
-
-
 function processUserSelection(selection) {
     var response = '';
 
     switch (selection) {
         case 'modo de micro':
-            response = 'El modo de micro de nuestra aplicación te permite interactuar con la aplicación usando tu voz. Para comenzar, simplemente di "añade ..." seguido del nombre del producto que quieres añadir a tu carrito. Por ejemplo, puedes decir "añade una lámpara " para añadir la lámpara a el carrito. También puedes decir "elimina todo" para vaciar tu carrito o "elimina ..." seguido del nombre del producto para eliminar un producto específico. Recuerda que el reconocimiento de voz es sensible a la pronunciaación, así que asegúrate de hablar claramente.';
+            response = 'El modo de micro de nuestra aplicación te permite interactuar con la aplicación usando tu voz. Para comenzar, simplemente di "añade ..." seguido del nombre del producto que quieres añadir a tu carrito. Por ejemplo, puedes decir "añade una lámpara " para añadir la lámpara a el carrito. También puedes decir "elimina todo" para vaciar tu carrito o "elimina ..." seguido del nombre del producto para eliminar un producto específico. Recuerda que el reconocimiento de voz es sensible a la pronunciación, así que asegúrate de hablar claramente.';
             break;
         case 'modo de una mano':
             response = 'El modo de una mano de nuestra aplicación está diseñado para facilitar el uso de la aplicación con una sola mano. Al activar este modo, puedes cambiar entre productos utilizando la inclinación de tu dispositivo hacia adelante o hacia atrás. Además, puedes añadir el producto actual al carrito moviendo tu dispositivo hacia la derecha o quitarlo del carrito moviéndolo hacia la izquierda. Para cambiar entre productos, simplemente desliza tu dedo hacia la izquierda para el siguiente producto o hacia la derecha para el producto anterior. Este modo hace que la navegación sea más intuitiva y accesible, especialmente para usuarios que prefieren o necesitan usar la aplicación con una sola mano.';
             break;
         case 'Cupón de descuento':
-                // Verifica si ya se ha generado un código de descuento
-                if (sessionStorage.getItem('codigoDescuentoGenerado')) {
-                    response = 'Ya se ha generado un código de descuento. Vete a tomarr por culo.';
-                } else if (sessionStorage.getItem('puedeGenerarDescuento') === 'true') {
-                    const codigo = generarCodigoDescuento();
-                    sessionStorage.setItem('codigoDescuentoGenerado', 'true');
-                    response = `Tu código de descuento se ha copiado al portapapeles. Por favor, ingrésalo en el carrito para aplicar el descuento.`;
-                } else {
-                    response = 'No has añadido suficientes productos al carrito para generar un código de descuento.';
-                }
-                break;
-        
+            // Verifica si ya se ha generado un código de descuento
+            if (sessionStorage.getItem('codigoDescuentoGenerado')) {
+                response = 'Ya se ha generado un código de descuento. Vete a tomarr por culo.';
+            } else if (sessionStorage.getItem('puedeGenerarDescuento') === 'true') {
+                const codigo = generarCodigoDescuento();
+                sessionStorage.setItem('codigoDescuentoGenerado', 'true');
+                response = `Tu código de descuento se ha copiado al portapapeles. Por favor, ingrésalo en el carrito para aplicar el descuento.`;
+            } else {
+                response = 'No has añadido suficientes productos al carrito para generar un código de descuento.';
+            }
+
+            break;
         
         default:
             response = 'Lo siento, no entendí eso. ¿Puedes intentarlo de nuevo?';
-            
     }
 
     return response;
 }
+
 
 document.getElementById('clear-chat-btn').addEventListener('click', function() {
     var chatMessages = document.getElementById('chat-messages');
@@ -687,7 +684,7 @@ document.getElementById('user-selection').addEventListener('change', function(ev
 
 // Función para generar un código de descuento y almacenarlo
 async function generarCodigoDescuento() {
-    
+    // Verifica si ya se ha generado un código de descuento
     if (sessionStorage.getItem('codigoDescuentoGenerado')) {
         alert('Ya se ha generado un código de descuento.');
         return;
@@ -701,7 +698,7 @@ async function generarCodigoDescuento() {
 
     
     sessionStorage.setItem(codigo, true); 
-    
+   
     sessionStorage.setItem('codigoDescuentoGenerado', true);
 
     // Copiar el código al portapapeles
@@ -736,7 +733,7 @@ function aplicarCodigoDescuento(codigo) {
 document.getElementById('aplicarCodigoBtn').addEventListener('click', function() {
     var codigoDescuento = document.getElementById("codigoDescuentoInput").value.trim();
     var response = aplicarCodigoDescuento(codigoDescuento);
-    document.getElementById("codigoDescuentoInput").value = ''; 
-    alert(response); 
+    document.getElementById("codigoDescuentoInput").value = ''; // Limpiar el campo de entrada
+    alert(response); // Mostrar la respuesta en un alerta
 });
 
