@@ -6,9 +6,9 @@
     "Mesa": {"precio": 260, "imagen": "img/mesa.png", "categoria": "Hogar"},
     "Lámpara": {"precio": 35, "imagen": "img/lampara.png", "categoria": "Hogar"},
     "Bicicleta": {"precio": 230, "imagen": "img/bicicleta.png", "categoria": "Deporte"},
-    "Balón de fútbol": {"precio": 12, "imagen": "img/lampara.png", "categoria": "Deporte"},
-    "Pesas": {"precio": 35, "imagen": "img/lampara.png", "categoria": "Deporte"},
-    "IPhone": {"precio": 1000, "imagen": "img/lampara.png", "categoria": "Electrónica"},
-    "Altavoz": {"precio": 100, "imagen": "img/lampara.png", "categoria": "Electrónica"},
-    "Película": {"precio": 35, "imagen": "img/lampara.png", "categoria": "Ocio"}
+    "Balón de fútbol": {"precio": 12, "imagen": "img/balon.jpg", "categoria": "Deporte"},
+    "Pesas": {"precio": 35, "imagen": "img/pesas.jpg", "categoria": "Deporte"},
+    "IPhone": {"precio": 1000, "imagen": "img/iphone.jpeg", "categoria": "Electrónica"},
+    "Altavoz": {"precio": 100, "imagen": "img/altavoz.png", "categoria": "Electrónica"},
+    "Película": {"precio": 35, "imagen": "img/pelicula.jpg", "categoria": "Ocio"}
 }
