@@ -1,10 +1,8 @@
-// Agrega esto al inicio del archivo
 const socket = io();
 
-// Agrega esta función para generar el código QR
 function generarQR() {
   let qrCode = new QRCode(document.getElementById('qrCode'), {
-      text: 'escanearCarrito', // Cambia el texto a un identificador único
+      text: 'escanearCarrito',
       width: 256,
       height: 256,
       colorDark : "#000000",
@@ -16,7 +14,7 @@ function generarQR() {
 // Llama a la función generarQR cuando la página se haya cargado
 window.onload = generarQR;
 
-// Agrega esta función para mostrar los datos del carrito recibido
+// Muestra los datos del carrito recibido
 function mostrarCarritoRecibido(carritoData) {
   let productos = document.getElementById('productos');
   productos.innerHTML = '';
