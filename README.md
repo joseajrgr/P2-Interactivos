@@ -38,5 +38,5 @@ Todo esto es necesario, ya que usamos módulos que necesitan una conexión segur
     4.4. Categorías: Al seleccionar cualquiera de las categorías se filtrarán los productos.
     4.5. Chatbot: El chatbot explica las principales funcionalidades cuando las seleccionasd del desplegable. Además, seleccionando la opción de cupón de descuento, se generará y copiará al portapapeles. Solo se puede generar uno por sesión, ya que si se prueba a solicitar otro, avisará de que no es posible.
     4.6. Modo una mano: Pulsar el botón con icono de una mano. La interfaz se modificará reubicando los botones para que sean más accesibles. Además, para añadir, quitar y desplazarse por los productos se puede realizar mediante los gestos que hemos mencionado previamente.
-    4.7. Desde el carrito, seleccionar la opción de "pagar". Se abrirá la camara y necesitará escanear el qr de la página de encargado (que tenemos previamente abierta en el ordenador).
+    4.7. Desde el carrito, seleccionar la opción de "pagar". Se abrirá la camara y necesitará escanear el qr de la página de encargado (que tenemos previamente abierta en el ordenador). En la página del encargado, aparecerán los productos que tenía el cliente (que se eliminarán del carrito).
    
