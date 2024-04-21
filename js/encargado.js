@@ -1,5 +1,6 @@
 const socket = io();
 
+// Función para generar el código QR
 function generarQR() {
   let qrCode = new QRCode(document.getElementById('qrCode'), {
       text: 'escanearCarrito',
@@ -25,7 +26,7 @@ function mostrarCarritoRecibido(carritoData) {
   }
 }
 
-// Escucha el evento 'carrito' emitido por el servidor
+// Escucha el evento 'carrito' y llama a la función mostrarCarritoRecibido
 socket.on('carrito', function(carritoData) {
   console.log('Datos del carrito recibidos en el cliente:', carritoData);
   mostrarCarritoRecibido(carritoData);
@@ -88,7 +89,6 @@ document.getElementById('cancelDeleteProduct').addEventListener('click', functio
             document.getElementById('deleteProductContainer').style.display = 'none';
             // Oculta el botón de cancelar y el formulario de borrar producto
             document.getElementById('cancelDeleteProduct').style.display = 'none';
-            //document.getElementById('deleteProductForm').style.display = 'none';
 
             // Muestra los otros botones
             document.getElementById('showAddProductForm').style.display = 'block';
@@ -99,7 +99,7 @@ document.getElementById('cancelDeleteProduct').addEventListener('click', functio
     });
   });
 
-  document.getElementById('showAddProductForm').addEventListener('click', function() {
+    document.getElementById('showAddProductForm').addEventListener('click', function() {
     // Oculta los otros botones
     document.getElementById('deleteProduct').style.display = 'none';
     document.getElementById('showUpdateProductForm').style.display = 'none';
