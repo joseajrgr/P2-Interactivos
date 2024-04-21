@@ -390,6 +390,7 @@ function pagar() {
                 console.error("No se pudo acceder a la cámara", err);
                 scanning = false;
                 video.style.display = 'none';
+                document.getElementById('videoContainer').style.display = 'none';
             });
     }
 }
@@ -416,6 +417,7 @@ function scan() {
             }
             scanning = false;
             video.style.display = 'none';
+            document.getElementById('videoContainer').style.display = 'none';
             video.srcObject.getTracks().forEach(track => track.stop());
         } else {
             requestAnimationFrame(scan);
