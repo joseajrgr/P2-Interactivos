@@ -10,10 +10,10 @@
 
 -----------AÑADIDOS--------------
 - Pantalla de registro: En esta pantalla podrás seleccionar si eres cliente o encargado, además de poder registrarte.
-- Pantalla de encargado: Si seleccionas encargado, te lleva a una web donde aparecerán 3 opciones: borrar, añadir o modificar un producto. Mediante estas opciones se podrá cambiar todo lo relacionado con el json de productos, incluso la imagen de estos.
-- Al darle al botón de pagar en el dispositivo de cliente, se abrirá la cámara con la que este tendrá que escanear el qr de un encargado, para que así al encargado le aparezca los productos que ha añadido el cliente.
+- Pantalla de encargado: Si seleccionas encargado, te lleva a una web donde aparecerán 3 opciones: borrar, añadir o modificar un producto. Mediante estas opciones se podrá cambiar todo lo relacionado con el json de productos, incluso la imagen de estos. También aparecerá en su pantalla un código qr que los clientes podrán escanear a la hora de pagar.
+- Al darle al botón de pagar en el dispositivo de cliente, se abrirá la cámara con la que este tendrá que escanear el qr de un encargado, para que así al encargado le aparezcan los productos que ha añadido el cliente.
 - Chatbot: Aunque en el final de la P1 no lo incluimos, pensamos varias veces añadir un botón de ayuda. Esto lo hemos acabado haciendo implementando un chatbot, que hasta puede generar un cupón de descuento para aplicar en el carrito (una vez por sesión).
-- En el modo una mano hemos añadido diferentes gestos mediante los sensores de movimiento y giroscopio, si agitas el móvil hacia la derecha añades el producto que aparece en pantalla, hacia la izquierda lo borras, hacia delante pasas al anterior, y hacia detrás al siguiente.
+- En el modo una mano hemos añadido diferentes gestos mediante los sensores de movimiento y giroscopio: si agitas el móvil hacia la derecha añades el producto que aparece en pantalla, hacia la izquierda lo borras, hacia delante pasas al anterior, y hacia detrás al siguiente.
 - Notificaciones que indican cuando se añade un producto, el resultado del reconocimiento de voz...
 
 Funcionalidades no implementadas:
@@ -36,7 +36,7 @@ Todo esto es necesario, ya que usamos módulos que necesitan una conexión segur
     4.2. Barra de búsqueda: Se puede introducir el nombre de cualquier producto y antes de terminar de escribirlo irán apareciendo las sugerencias.
     4.3. Carrito: Al pulsar en el icono del carrito, se desplegará el mismo, mostrando la lista de productos añadidos, la opción de añadir el cupón, y la opción de pagar. También se puede eliminar y modificar la cantidad de cada producto añadido.
     4.4. Categorías: Al seleccionar cualquiera de las categorías se filtrarán los productos.
-    4.5. Chatbot: El chatbot explica las principales funcionalidades cuando las seleccionasd del desplegable. Además, seleccionando la opción de cupón de descuento, se generará y copiará al portapapeles. Solo se puede generar uno por sesión, ya que si se prueba a solicitar otro, avisará de que no es posible.
+    4.5. Chatbot: El chatbot explica las principales funcionalidades cuando las seleccionas del desplegable. Además, seleccionando la opción de cupón de descuento, se generará y copiará al portapapeles. Solo se puede generar uno por sesión, ya que si se prueba a solicitar otro, avisará de que no es posible.
     4.6. Modo una mano: Pulsar el botón con icono de una mano. La interfaz se modificará reubicando los botones para que sean más accesibles. Además, para añadir, quitar y desplazarse por los productos se puede realizar mediante los gestos que hemos mencionado previamente.
-    4.7. Desde el carrito, seleccionar la opción de "pagar". Se abrirá la camara y necesitará escanear el qr de la página de encargado (que tenemos previamente abierta en el ordenador). En la página del encargado, aparecerán los productos que tenía el cliente (que se eliminarán del carrito).
+    4.7. Desde el carrito, seleccionar la opción de "pagar". Se abrirá la camara y necesitará escanear el qr de la página de encargado (que tenemos previamente abierta en el ordenador). En la página del encargado, aparecerán los productos que tenía el cliente (que se eliminarán del carrito). De esta manera, el encargado sería el que a partir de entonces se encargase de cobrar la compra.
    
