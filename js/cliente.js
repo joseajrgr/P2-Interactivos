@@ -321,7 +321,8 @@ function iniciarReconocimientoVoz() {
 
         recognition.onresult = function(event) {
             var speechResult = event.results[0][0].transcript;
-            console.log('Resultado de reconocimiento de voz: ' + speechResult);
+            
+            mostrarNotificacion('Resultado de reconocimiento de voz: ' + speechResult);
         
             if (speechResult.toLowerCase().startsWith('añade')) {
                 var parts = speechResult.slice(6).split(' ');
@@ -340,7 +341,7 @@ function iniciarReconocimientoVoz() {
             }
         };
         recognition.onerror = function(event) {
-            console.log('Error de reconocimiento de voz: ' + event.error);
+            mostrarNotificacion('Error de reconocimiento de voz: ' + event.error);
         };
 
         recognition.start();
@@ -409,10 +410,10 @@ function scan() {
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let code = jsQR(imageData.data, imageData.width, imageData.height);
         if (code) {
-            console.log("Código QR detectado:", code.data);
+            mostrarNotificacion("Código QR detectado:", code.data);
             if (code.data === 'escanearCarrito') {
                 socket.emit('carrito', carritoProductos);
-                console.log("Datos del carrito enviados al servidor");
+                mostrarNotificacion("Datos del carrito enviados al servidor");
                 eliminarTodoDelCarrito();
             }
             scanning = false;
@@ -467,24 +468,24 @@ function handleOrientation(event) {
             console.log('Diferencia de inclinación:', inclinacion - ultimaInclinacion);
 
             if (inclinacion > ultimaInclinacion + 10) {
-                console.log('Inclinación hacia adelante');
+                mostrarNotificacion('Inclinación hacia adelante');
                 // Cambiar al siguiente producto
                 productoActual = (productoActual + 1) % Object.keys(listaProductos).length;
                 mostrarProductoActual();
                 ultimoCambio = tiempoActual;
             } else if (inclinacion < ultimaInclinacion - 10) {
-                console.log('Inclinación hacia atrás');
+                mostrarNotificacion('Inclinación hacia atrás');
                 // Cambiar al producto anterior
                 productoActual = (productoActual - 1 + Object.keys(listaProductos).length) % Object.keys(listaProductos).length;
                 mostrarProductoActual();
                 ultimoCambio = tiempoActual;
             } else if (orientacion > ultimaOrientacion + 10) {
-                console.log('Movimiento hacia la derecha');
+                mostrarNotificacion('Movimiento hacia la derecha');
                 // Añadir el producto actual al carrito
                 agregarAlCarrito(Object.keys(listaProductos)[productoActual]);
                 ultimoCambio = tiempoActual;
             } else if (orientacion < ultimaOrientacion - 10) {
-                console.log('Movimiento hacia la izquierda');
+                mostrarNotificacion('Movimiento hacia la izquierda');
                 // Quitar el producto actual del carrito
                 eliminarDelCarrito(Object.keys(listaProductos)[productoActual]);
                 ultimoCambio = tiempoActual;
@@ -745,3 +746,41 @@ document.getElementById('aplicarCodigoBtn').addEventListener('click', function()
     alert(response); // Mostrar la respuesta en un alerta
 });
 
+
+function mostrarNotificacion(mensaje) {
+    // Crear el elemento de notificación
+    var notificacion = document.createElement('div');
+    notificacion.className = 'notificacion';
+    notificacion.textContent = mensaje;
+
+    // Aplicar estilos a la notificación
+    notificacion.style.position = 'fixed';
+    notificacion.style.top = '-100px';
+    notificacion.style.left = '50%';
+    notificacion.style.transform = 'translateX(-50%)';
+    notificacion.style.backgroundColor = '#333';
+    notificacion.style.color = '#fff';
+    notificacion.style.padding = '10px';
+    notificacion.style.borderRadius = '5px';
+    notificacion.style.zIndex = '9999';
+    notificacion.style.transition = 'top 0.5s ease-in-out';
+    notificacion.style.fontSize = '40px';
+    notificacion.style.justifyContent = 'center';
+    notificacion.style.alignItems = 'center';
+
+    // Agregar la notificación al body
+    document.body.appendChild(notificacion);
+
+    // Mostrar la notificación
+    setTimeout(function() {
+        notificacion.style.top = '20px';
+    }, 100);
+
+    // Ocultar la notificación después de 2 segundos
+    setTimeout(function() {
+        notificacion.style.top = '-100px';
+        setTimeout(function() {
+            document.body.removeChild(notificacion);
+        }, 500);
+    }, 2000);
+}
