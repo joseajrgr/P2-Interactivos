@@ -626,7 +626,7 @@ function processUserSelection(selection) {
 
     switch (selection) {
         case 'modo de micro':
-            response = 'El modo de micro de nuestra aplicación te permite interactuar con la aplicación usando tu voz. Para comenzar, simplemente di "añade ..." seguido del nombre del producto que quieres añadir a tu carrito. Por ejemplo, puedes decir "añade una lámpara " para añadir la lámpara a el carrito. También puedes decir "elimina todo" para vaciar tu carrito o "elimina ..." seguido del nombre del producto para eliminar un producto específico. Recuerda que el reconocimiento de voz es sensible a la pronunciación, así que asegúrate de hablar claramente.';
+            response = 'El modo micrófono de nuestra aplicación te permite interactuar con la aplicación usando tu voz. Para comenzar, simplemente di "añade ..." seguido del nombre del producto que quieres añadir a tu carrito. Por ejemplo, puedes decir "añade una lámpara " para añadir la lámpara a el carrito. También puedes decir "elimina todo" para vaciar tu carrito o "elimina ..." seguido del nombre del producto para eliminar un producto específico. Recuerda que el reconocimiento de voz es sensible a la pronunciación, así que asegúrate de hablar claramente.';
             break;
         case 'modo de una mano':
             response = 'El modo de una mano de nuestra aplicación está diseñado para facilitar el uso de la aplicación con una sola mano. Al activar este modo, puedes cambiar entre productos utilizando la inclinación de tu dispositivo hacia adelante o hacia atrás. Además, puedes añadir el producto actual al carrito moviendo tu dispositivo hacia la derecha o quitarlo del carrito moviéndolo hacia la izquierda. Para cambiar entre productos, simplemente desliza tu dedo hacia la izquierda para el siguiente producto o hacia la derecha para el producto anterior. Este modo hace que la navegación sea más intuitiva y accesible, especialmente para usuarios que prefieren o necesitan usar la aplicación con una sola mano.';
@@ -634,7 +634,7 @@ function processUserSelection(selection) {
         case 'Cupón de descuento':
             // Verifica si ya se ha generado un código de descuento
             if (sessionStorage.getItem('codigoDescuentoGenerado')) {
-                response = 'Ya se ha generado un código de descuento. Vete a tomarr por culo.';
+                response = 'Ya se ha generado un código de descuento con anterioridad. Disculpe las molestias.';
             } else if (sessionStorage.getItem('puedeGenerarDescuento') === 'true') {
                 const codigo = generarCodigoDescuento();
                 sessionStorage.setItem('codigoDescuentoGenerado', 'true');
