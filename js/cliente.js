@@ -377,6 +377,7 @@ const socket = io();
 function pagar() {
     if (!scanning) {
         scanning = true;
+        document.getElementById('videoContainer').style.display = 'flex';
         video.style.display = 'block';
         navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
             .then(function(stream) {
@@ -392,10 +393,14 @@ function pagar() {
             });
     }
 }
-
+document.getElementById('closeVideoBtn').addEventListener('click', function() {
+    document.getElementById('videoContainer').style.display = 'none';
+    video.pause();
+    video.currentTime = 0;
+    scanning = false;
+});
 // Modifica la función scan() de la siguiente manera
-function scan() {
-    
+function scan() { 
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
