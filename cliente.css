@@ -380,6 +380,30 @@ h1, h2 {
     cursor: pointer;
     border-radius: 4px;
 }
+#codigoDescuentoInput {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+#aplicarCodigoBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#aplicarCodigoBtn:hover {
+    background-color: #45a049;
+}
+
 
 /* Estilos para el modo de una sola mano */
 .modo-una-mano .lista-productos li {
