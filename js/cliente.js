@@ -1,7 +1,33 @@
 
+/* -------------------------------------- VARIABLES -------------------------------- */
 var listaProductos = {};
+var carritoProductos = {};
+var costeTotal = 0;
+var categorias = document.getElementsByClassName('categoria');
 var categoriaSeleccionada = 'Todo'; // Categoría inicial
 
+let video = document.getElementById('video');
+let canvas = document.createElement('canvas');
+canvas.setAttribute('willReadFrequently', 'true');
+let ctx = canvas.getContext('2d');
+let scanning = false;
+const socket = io();
+
+var modoUnaMano = false;
+var productoActual = 0;
+var ultimaOrientacion = null;
+var cooldownDuracion = 1250; // 1,25 segundos
+ultimaInclinacion = null;
+ultimoCambio =null;
+
+var touchstartX = 0;
+var touchendX = 0;
+var productoActual = 0; // Índice del producto actual
+var modoUnaMano = false; // Añade esta línea para declarar la variable
+
+var isChatbotOpened = false;
+
+/* -------------------------------------- FUNCIONES -------------------------------- */
 fetch('productos.json')
     .then(response => response.json())
     .then(data => listaProductos = data)
@@ -44,7 +70,7 @@ function cargarProductos() {
             divBoton.className = 'producto-boton';
             var btnComprar = document.createElement('button');
             btnComprar.textContent = "Comprar";
-            // Asegúrate de que el evento de clic se asigne correctamente
+            
             btnComprar.addEventListener('click', (function(prod) {
                 return function() {
                     agregarAlCarrito(prod);
@@ -64,7 +90,6 @@ function cargarProductos() {
     }
 }
 
-var categorias = document.getElementsByClassName('categoria');
 for (var i = 0; i < categorias.length; i++) {
     categorias[i].addEventListener('click', function() {
         categoriaSeleccionada = this.textContent;
@@ -75,7 +100,7 @@ for (var i = 0; i < categorias.length; i++) {
 
 function generarEstrellasAleatorias() {
     var estrellas = '';
-    var numEstrellas = Math.floor(Math.random() * 5) + 1; // Genera un número aleatorio de 1 a 4
+    var numEstrellas = Math.floor(Math.random() * 5) + 1; // Genera un número aleatorio de 1 a 5
 
     for (var i = 0; i < numEstrellas; i++) {
         estrellas += '★ '; // Añade una estrella al string
@@ -92,15 +117,14 @@ fetch('productos.json')
     })
     .catch(error => console.error('Error:', error));
     
-    
-var costeTotal = 0;
+        
+/* -------------------------------------- FUNCIONES DE COSTE Y CARRITO -------------------------------- */
 function actualizarCosteTotal() {
     // Inicializa el coste total a 0
     costeTotal = 0;
     // Recorre todos los productos en el carrito
     for (var producto in carritoProductos) {
         // Suma el coste de cada producto al coste total
-        // Asegúrate de que listaProductos[producto].precio contenga el precio correcto del producto
         costeTotal += listaProductos[producto].precio * carritoProductos[producto];
     }
     // Recupera el descuento del localStorage
@@ -149,7 +173,6 @@ function agregarAlCarrito(producto, cantidad = 1) {
     }
 }
 
-var carritoProductos = {};
 function actualizarCarrito() {
     var carrito = document.getElementById("carrito");
     carrito.innerHTML = ''; // Limpiar el carrito
@@ -246,24 +269,6 @@ function eliminarDelCarrito(producto) {
         }
     }
 }
-function eliminarDelCarrito(producto) {
-    var productoEnMinusculas = producto.toLowerCase();
-    var productoEnLista = Object.keys(carritoProductos).find(key => key.toLowerCase() === productoEnMinusculas);
-    
-    if (productoEnLista) {
-        carritoProductos[productoEnLista]--;
-        if (carritoProductos[productoEnLista] === 0) {
-            delete carritoProductos[productoEnLista];
-        }
-
-        // Actualizar el coste total y el carrito
-
-        actualizarCarrito();
-        actualizarCosteTotal();
-    } else {
-        console.log('El producto no está en el carrito.');
-    }
-}
 
 function eliminarTodoDelCarrito() {
     console.log('Eliminando todos los productos del carrito...');
@@ -275,79 +280,6 @@ function eliminarTodoDelCarrito() {
     carritoProductos = {};
     actualizarCarrito();
     actualizarCosteTotal();
-}
-
-function convertirNumeroPalabraANumero(palabra) {
-    switch (palabra) {
-        case 'una': return 1;
-        case 'un': return 1;
-        case 'dos': return 2;
-        case 'tres': return 3;
-        case 'cuatro': return 4;
-        case 'cinco': return 5;
-        case 'seis': return 6;
-        case 'siete': return 7;
-        case 'ocho': return 8;
-        case 'nueve': return 9;
-        case 'diez': return 10;
-    
-        default: return NaN;
-    }
-}
-// Función para iniciar reconocimiento por voz
-function iniciarReconocimientoVoz() {
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'es-ES';
-        recognition.interimResults = false;
-        recognition.maxAlternatives = 1;
-
-        var microfonoBtn = document.getElementById('microfonoBtn');
-    
-        recognition.onstart = function() {
-            microfonoBtn.classList.add('active');
-            microfonoBtn.innerHTML = '<img src="/img/microphone.png" alt="Botón micrófono activo">'; /* Cambia a otra imagen */
-            microfonoBtn.classList.add('active');
-            microfonoBtn.innerHTML = '<img src="/img/microphone.png" alt="Botón micrófono activo">'; /* Cambia a otra imagen */
-        };
-        
-        
-        recognition.onend = function() {
-            microfonoBtn.classList.remove('active');
-            microfonoBtn.innerHTML = '<img src="/img/microphone-slash.png" alt="Botón micrófono">'; /* Cambia a la imagen original */
-            microfonoBtn.classList.remove('active');
-            microfonoBtn.innerHTML = '<img src="/img/microphone-slash.png" alt="Botón micrófono">'; /* Cambia a la imagen original */
-        };
-
-        recognition.onresult = function(event) {
-            var speechResult = event.results[0][0].transcript;
-            
-            mostrarNotificacion('Resultado de reconocimiento de voz: ' + speechResult);
-        
-            if (speechResult.toLowerCase().startsWith('añade')) {
-                var parts = speechResult.slice(6).split(' ');
-                var cantidad = convertirNumeroPalabraANumero(parts[0]);
-                var producto = parts.slice(1).join(' ');
-                if (isNaN(cantidad)) {
-                    
-                    cantidad = 1;
-                    producto = parts.join(' ');
-                }
-                agregarAlCarrito(producto, cantidad);
-            } else if (speechResult.toLowerCase().startsWith('elimina todo')) {
-                eliminarTodoDelCarrito();
-            } else if (speechResult.toLowerCase().startsWith('elimina')) {
-                eliminarDelCarrito(speechResult.slice(8));
-            }
-        };
-        recognition.onerror = function(event) {
-            mostrarNotificacion('Error de reconocimiento de voz: ' + event.error);
-        };
-
-        recognition.start();
-    } else {
-        alert('Tu navegador no soporta reconocimiento de voz.');
-    }
 }
 
 document.getElementById("mostrarCarritoBtn").addEventListener("click", function() {
@@ -366,13 +298,6 @@ document.getElementById("cerrarCarritoBtn").addEventListener("click", function()
         popupCarrito.style.display = "none";
     }, 500);
 });
-
-let video = document.getElementById('video');
-let canvas = document.createElement('canvas');
-canvas.setAttribute('willReadFrequently', 'true');
-let ctx = canvas.getContext('2d');
-let scanning = false;
-const socket = io();
 
 // Función para pagar la compra
 function pagar() {
@@ -429,15 +354,84 @@ function scan() {
 }
 document.getElementById("pagarBtn").addEventListener("click", pagar);
 
+/* -------------------------------------- FUNCIONES DE RECONOCIMIENTO POR VOZ -------------------------------- */
+
+function convertirNumeroPalabraANumero(palabra) {
+    switch (palabra) {
+        case 'una': return 1;
+        case 'un': return 1;
+        case 'dos': return 2;
+        case 'tres': return 3;
+        case 'cuatro': return 4;
+        case 'cinco': return 5;
+        case 'seis': return 6;
+        case 'siete': return 7;
+        case 'ocho': return 8;
+        case 'nueve': return 9;
+        case 'diez': return 10;
+    
+        default: return NaN;
+    }
+}
+
+// Función para iniciar reconocimiento por voz
+function iniciarReconocimientoVoz() {
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'es-ES';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        var microfonoBtn = document.getElementById('microfonoBtn');
+    
+        recognition.onstart = function() {
+            microfonoBtn.classList.add('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone.png" alt="Botón micrófono activo">'; /* Cambia a otra imagen */
+            microfonoBtn.classList.add('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone.png" alt="Botón micrófono activo">'; /* Cambia a otra imagen */
+        };
+        
+        
+        recognition.onend = function() {
+            microfonoBtn.classList.remove('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone-slash.png" alt="Botón micrófono">'; /* Cambia a la imagen original */
+            microfonoBtn.classList.remove('active');
+            microfonoBtn.innerHTML = '<img src="/img/microphone-slash.png" alt="Botón micrófono">'; /* Cambia a la imagen original */
+        };
+
+        recognition.onresult = function(event) {
+            var speechResult = event.results[0][0].transcript;
+            
+            mostrarNotificacion('Resultado de reconocimiento de voz: ' + speechResult);
+        
+            if (speechResult.toLowerCase().startsWith('añade')) {
+                var parts = speechResult.slice(6).split(' ');
+                var cantidad = convertirNumeroPalabraANumero(parts[0]);
+                var producto = parts.slice(1).join(' ');
+                if (isNaN(cantidad)) {
+                    
+                    cantidad = 1;
+                    producto = parts.join(' ');
+                }
+                agregarAlCarrito(producto, cantidad);
+            } else if (speechResult.toLowerCase().startsWith('elimina todo')) {
+                eliminarTodoDelCarrito();
+            } else if (speechResult.toLowerCase().startsWith('elimina')) {
+                eliminarDelCarrito(speechResult.slice(8));
+            }
+        };
+        recognition.onerror = function(event) {
+            mostrarNotificacion('Error de reconocimiento de voz: ' + event.error);
+        };
+
+        recognition.start();
+    } else {
+        alert('Tu navegador no soporta reconocimiento de voz.');
+    }
+}
+
 // Añadir un event listener al botón de microfono
 document.getElementById("microfonoBtn").addEventListener("click", iniciarReconocimientoVoz);
-
-var modoUnaMano = false;
-var productoActual = 0;
-var ultimaOrientacion = null;
-var cooldownDuracion = 1250; // 1,25 segundos
-ultimaInclinacion = null;
-ultimoCambio =null;
 
 function mostrarProductoActual() {
     var lista = document.getElementById('listaProductos');
@@ -502,11 +496,6 @@ window.addEventListener('deviceorientation', function(event) {
     handleOrientation(event);
 });
 
-
-var touchstartX = 0;
-var touchendX = 0;
-var productoActual = 0; // Índice del producto actual
-var modoUnaMano = false; // Añade esta línea para declarar la variable
 
 function handleGesture() {
     var lista = document.getElementById('listaProductos');
@@ -580,6 +569,7 @@ document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
     }
 });
 
+/* -------------------------------------- FUNCIONES DE BÚSQUEDA -------------------------------- */
 function filtrarProductos() {
     var input = document.getElementById('productoInput');
     var filtro = input.value.toLowerCase();
@@ -598,11 +588,7 @@ function filtrarProductos() {
     }
 }
 
-//chatbot
-
-
-
-var isChatbotOpened = false; 
+/* -------------------------------------- FUNCIONES DEL CHATBOT -------------------------------- */ 
 
 function toggleChatbot() {
     var chatbotPopup = document.getElementById('chatbot-popup');
@@ -621,6 +607,7 @@ function toggleChatbot() {
         }, 500); 
     }
 }
+
 function processUserSelection(selection) {
     var response = '';
 
@@ -652,7 +639,6 @@ function processUserSelection(selection) {
     return response;
 }
 
-
 document.getElementById('clear-chat-btn').addEventListener('click', function() {
     var chatMessages = document.getElementById('chat-messages');
     var welcomeMessage = document.getElementById('welcome-message');
@@ -667,7 +653,6 @@ document.getElementById('clear-chat-btn').addEventListener('click', function() {
         chatMessages.removeChild(element);
     });
 });
-
 
 document.getElementById('user-selection').addEventListener('change', function(event) {
     var userSelection = event.target.value;
@@ -690,7 +675,6 @@ document.getElementById('user-selection').addEventListener('change', function(ev
     
 });
 
-
 // Función para generar un código de descuento y almacenarlo
 async function generarCodigoDescuento() {
     // Verifica si ya se ha generado un código de descuento
@@ -705,7 +689,6 @@ async function generarCodigoDescuento() {
         codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
     }
 
-    
     sessionStorage.setItem(codigo, true); 
    
     sessionStorage.setItem('codigoDescuentoGenerado', true);
@@ -720,24 +703,25 @@ async function generarCodigoDescuento() {
 
     return codigo;
 }
+
 // Función para aplicar el código de descuento
 function aplicarCodigoDescuento(codigo) {
     if (sessionStorage.getItem(codigo)) {
         const descuento = 0.10; // 10% de descuento
-        // Corrección aquí: localStorage.setItem en lugar de localStoragesetItem
+        
         localStorage.setItem('descuento', descuento);
         costeTotal -= (costeTotal * descuento) / 100;
+
         // Elimina el código de descuento del almacenamiento local después de usarlo
         console.log(costeTotal);
         localStorage.removeItem(codigo);
         
-        actualizarCosteTotal(); // Asegúrate de llamar a esta función para actualizar el coste total
+        actualizarCosteTotal();
         return `¡Descuento aplicado! Ahora el coste total es ${costeTotal.toFixed(2)}€.`;
     } else {
         return 'Lo siento, el código de descuento no es válido.';
     }
 }
-
 
 document.getElementById('aplicarCodigoBtn').addEventListener('click', function() {
     var codigoDescuento = document.getElementById("codigoDescuentoInput").value.trim();
@@ -746,7 +730,7 @@ document.getElementById('aplicarCodigoBtn').addEventListener('click', function()
     alert(response); // Mostrar la respuesta en un alerta
 });
 
-
+/* -------------------------------------- FUNCIONES DE NOTIFICACIÓN -------------------------------- */
 function mostrarNotificacion(mensaje) {
     // Crear el elemento de notificación
     var notificacion = document.createElement('div');
