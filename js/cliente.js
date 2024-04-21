@@ -435,7 +435,7 @@ document.getElementById("microfonoBtn").addEventListener("click", iniciarReconoc
 var modoUnaMano = false;
 var productoActual = 0;
 var ultimaOrientacion = null;
-var cooldownDuracion = 2000; // 2 segundos
+var cooldownDuracion = 1250; // 1,25 segundos
 ultimaInclinacion = null;
 ultimoCambio =null;
 
