@@ -246,6 +246,7 @@ function eliminarItemDelCarrito(producto) {
         console.log('El producto no está en el carrito.');
     }
 }
+
 function eliminarDelCarrito(producto) {
     var productoEnMinusculas = producto.toLowerCase();
     var productoEnLista = Object.keys(listaProductos).find(key => key.toLowerCase() === productoEnMinusculas || key.toLowerCase() + 's' === productoEnMinusculas);
@@ -261,7 +262,6 @@ function eliminarDelCarrito(producto) {
                 delete carritoProductos[productoEnLista];
             }
 
-            
             actualizarCarrito();
             actualizarCosteTotal();
         } else {
@@ -289,7 +289,7 @@ document.getElementById("mostrarCarritoBtn").addEventListener("click", function(
     // Utiliza setTimeout para asegurar que el carrito esté visible antes de ajustar la posición
     setTimeout(function() {
         carrito.style.bottom = "0"; // Ajusta la posición para que el carrito aparezca desde la parte inferior
-    }, 10); // Ajusta el tiempo de espera según sea necesario
+    }, 10);
 });
 document.getElementById("cerrarCarritoBtn").addEventListener("click", function() {
     var popupCarrito = document.getElementById("popupCarrito");
@@ -433,6 +433,8 @@ function iniciarReconocimientoVoz() {
 // Añadir un event listener al botón de microfono
 document.getElementById("microfonoBtn").addEventListener("click", iniciarReconocimientoVoz);
 
+
+/* -------------------------------------- FUNCIONES DEL MODO UNA MANO -------------------------------- */
 function mostrarProductoActual() {
     var lista = document.getElementById('listaProductos');
     var productos = lista.getElementsByTagName('li');
@@ -560,7 +562,7 @@ document.getElementById('modoUnaManoBtn').addEventListener('click', function() {
             lista.children[i].style.display = 'block';
         }
         // Mover la barra de búsqueda y los botones a su posición original
-        body.classList.remove('modo-una-mano'); // Remueve la clase del bod
+        body.classList.remove('modo-una-mano');
         body.insertBefore(input, lista);
         body.insertBefore(agregarBtn, lista);
         body.insertBefore(micBtn, lista);
