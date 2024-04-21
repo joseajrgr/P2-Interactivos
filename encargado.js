@@ -18,19 +18,19 @@ window.onload = generarQR;
 
 // Agrega esta función para mostrar los datos del carrito recibido
 function mostrarCarritoRecibido(carritoData) {
-    let carritoRecibido = document.getElementById('carritoRecibido');
-    carritoRecibido.innerHTML = '';
-    for (let producto in carritoData) {
-        let item = document.createElement('p');
-        item.textContent = `${producto}: ${carritoData[producto]}`;
-        carritoRecibido.appendChild(item);
-    }
+  let productos = document.getElementById('productos');
+  productos.innerHTML = '';
+  for (let producto in carritoData) {
+      let item = document.createElement('p');
+      item.textContent = `${producto}: ${carritoData[producto]}`;
+      productos.appendChild(item);
+  }
 }
 
 // Escucha el evento 'carrito' emitido por el servidor
 socket.on('carrito', function(carritoData) {
-    console.log('Datos del carrito recibidos en el cliente:', carritoData);
-    mostrarCarritoRecibido(carritoData);
+  console.log('Datos del carrito recibidos en el cliente:', carritoData);
+  mostrarCarritoRecibido(carritoData);
 });
 
 document.getElementById('deleteProduct').addEventListener('click', function() {
