@@ -31,19 +31,23 @@
             <input type="submit" value="Confirmar añadir" style="display: none;">
             <button id="cancelAddProduct" type="button" style="display: none;">Cancelar</button>
         </form>
+        
+        <!-- Botón para eliminar producto -->
         <button id="deleteProduct">Borrar producto</button>
         <div id="deleteProductContainer" style="display: none;">
             <select id="productSelect">
-                <!-- Las opciones se llenarán con JavaScript -->
+                <!-- Se llenará con JavaScript -->
             </select>
             <button id="confirmDeleteProduct">Confirmar borrado</button>
             <button id="cancelDeleteProduct" style="display: none;">Cancelar</button>
         </div>
+
+        <!-- Botón para actualizar producto -->
         <button id="showUpdateProductForm">Modificar producto</button>
         <form id="updateProductForm" style="display: none;">
             <label for="productSelectUpdate">Selecciona el producto a modificar:</label><br>
             <select id="productSelectUpdate">
-              <!-- Las opciones se llenarán con JavaScript -->
+                <!-- Se llenará con JavaScript -->
             </select><br>
             <label for="productNameUpdate">Nuevo nombre del producto:</label><br>
             <input type="text" id="productNameUpdate" name="productNameUpdate"><br>

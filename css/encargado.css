@@ -42,15 +42,18 @@ h1, h2 {
 #carritoRecibido {
     width: 20%;
     padding: 20px;
-    margin: 10px 0px 10px 10%;  /* top right bottom left */
+    margin: 10px 0px 10px 10%;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    font-size: 1em;
 }
+
 #carritoRecibido h2 {
-    font-size: 16px;  /* Ajusta esto según tus necesidades */
+    font-size: 1.75em;
 }
+
 #carritoRecibido ul {
     list-style-type: none;
     padding: 0;
