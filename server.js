@@ -100,7 +100,7 @@ const storage = multer.diskStorage({
     cb(null, 'img/')
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)  // Usa el nombre original del archivo
+    cb(null, file.originalname) // Guarda el archivo con su nombre original
   }
 })
 
@@ -108,7 +108,7 @@ const upload = multer({ storage: storage });
 
 app.post('/addProduct', upload.single('imagen'), (req, res) => {
   const productToAdd = req.body;
-  productToAdd.imagen = path.join('img', req.file.filename);  // Añade la ruta de la imagen al producto
+  productToAdd.imagen = path.join('img', req.file.filename);  // Guarda la ruta de la imagen
 
   fs.readFile('productos.json', (err, data) => {
     if (err) {
